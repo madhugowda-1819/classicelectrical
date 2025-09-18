@@ -1,6 +1,6 @@
-#index {
+/* Base Styles for Desktop/Laptop */
+#index, #product, #contact {
   font-family: 'Arial', sans-serif;
-  background-image: url('../images/working-1.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -10,50 +10,36 @@
   margin: 0;
   z-index: 0;
 }
-
-
-/* Dark overlay */
-#index::before {
-  content: "";
-  position: fixed; /* Use fixed for full screen */
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.4); /* Adjust opacity for darkness */
-  z-index: -1;
-}
-
-#product{
-    font-family: 'Arial', sans-serif;
+#index {
   background-image: url('../images/working-1.jpeg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  height: 100vh;
-  position: relative;
-  margin: 0;
-  z-index: 0;
 }
-#product::before {
+#product {
+  background-image: url('../images/working-1.jpeg');
+}
+
+#index::before, #product::before {
   content: "";
-  position: fixed; /* Use fixed for full screen */
+  position: fixed;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.4); /* Adjust opacity for darkness */
+  background-color: rgba(0, 0, 0, 0.4);
   z-index: -1;
 }
 
-.intro h1 {
-  margin-bottom: 1rem;
+.intro h1, .product h1, .contact h1 {
+  text-align: center;
+  color: white;
+  font-size: 60px;
+  font-weight: bold;
+  margin-top: 150px;
 }
 
 .overlay img {
   max-height: 200px;
 }
+
 .custom-btn {
   background-color: rgb(255, 89, 0);
   color: white;
@@ -64,12 +50,16 @@
   background-color: rgb(38, 35, 32);
   color: white;
 }
-#classic {
+
+#classic, #classic1, .product1, #contact1, #about {
   background-color: #f7ece2;
-  margin-top: 125px; /* adjust if header size changes */
-  height: 500px;
   width: 100%;
   margin-bottom: 0;
+}
+
+#classic {
+  margin-top: 0;
+  height: auto;
   padding: 20px;
 }
 
@@ -77,19 +67,9 @@
   text-align: center;
 }
 
-/* Optional: Add spacing control for better readability on small screens */
-@media (max-width: 768px) {
-  #classic {
-    height: auto;
-    padding: 2rem 1rem;
-  }
-}
 #classic1 {
-  background-color: #f7ece2;
   margin-top: 220px;
   height: 900px;
-  width: 100%;
-  margin-bottom: 0;
   padding: 2rem;
 }
 
@@ -103,121 +83,74 @@
   font-weight: bolder;
   font-size: 1.1rem;
 }
-/* For tablets (width < 992px) */
+
+.product1 {
+  margin-top: 200px;
+  height: auto;
+}
+
+.product1 img {
+  height: 300px;
+  width: 300px;
+}
+
+.customshadow {
+  box-shadow: 0px 0px 10px black;
+  background-color: #f8f9fa;
+}
+
+/* Dropdown Hover */
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 0;
+}
+
+.dropdown-menu {
+  transition: all 0.2s ease;
+}
+
+/* Tablets (width < 992px) */
 @media (max-width: 991.98px) {
-  #classic{
-    height: 00px;
+  #classic {
+    height: auto;
+    padding: 2rem 1rem;
   }
   #classic1 {
     height: auto;
     margin-top: 180px;
     padding: 1.5rem;
   }
-
   #classic1 a h6 {
     font-size: 1rem;
     margin-top: 16px;
-    color: black;
-  font-weight: bolder;
-  font-size: 1.1rem;
   }
-  
+  .product1 img {
+    height: 250px;
+    width: 250px;
+  }
+  .intro h1, .product h1, .contact h1 {
+    font-size: 45px;
+    margin-top: 120px;
+  }
 }
 
-/* For mobiles (width < 768px) */
+/* Mobiles (width < 768px) */
 @media (max-width: 767.98px) {
   #classic1 {
-    height: auto;
     margin-top: 150px;
     padding: 1rem;
   }
-
   #classic1 a h6 {
     font-size: 0.95rem;
     margin-top: 14px;
     text-align: center;
-    color: black;
-  font-weight: bolder;
-  font-size: 1.1rem;
   }
-  /* footer{
-    background-color: brown;
-  } */
-  
-}
-
-.product h1{
-    text-align: center;
-    color: white;
-    margin-top: 150px;
-    font-size: 60px;
-    font-weight: bold;
-}
-.product1 {
-  background-color: #f7ece2;
-  margin-top: 200px; /* adjust if header size changes */
-  height: auto;
-  width: auto;
-  margin-bottom: 0;
-}
-.product1 img{
-    height: 300px;
-    width: 300px;
-}
-#about{
-     background-color: #f7ece2;
-}
-
-
-.contact h1{
-    text-align: center;
-    color: white;
-    margin-top: 250px;
-    font-size: 60px;
-    font-weight: bold;
-}
-#contact{
-    font-family: 'Arial', sans-serif;
-  background-image: url('../images/bg-09-free-img.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  height: 100vh;
-  position: relative;
-  margin: 0;
-  z-index: 0;
-}
-#contact::before {
-  content: "";
-  position: fixed; /* Use fixed for full screen */
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.4); /* Adjust opacity for darkness */
-  z-index: -1;
-}
-#contact1 {
-  background-color: #f7ece2;
-  margin-top: 200px; /* adjust if header size changes */
-  height: auto;
-  width: auto;
-  margin-bottom: 0;
-}
-.product1 img{
-    height: 300px;
-    width: 300px;
-}
-
-
-/* Show Bootstrap dropdown on hover */
-.nav-item.dropdown:hover .dropdown-menu {
-  display: block;
-  margin-top: 0; /* Prevent spacing bug */
-}
-
-/* Optional: smooth open/close effect */
-.dropdown-menu {
-  transition: all 0.2s ease;
+  .product1 img {
+    height: 200px;
+    width: 200px;
+  }
+  .intro h1, .product h1, .contact h1 {
+    font-size: 35px;
+    margin-top: 80px;
+  }
 }

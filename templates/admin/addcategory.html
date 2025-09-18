@@ -1,0 +1,61 @@
+{% extends 'admin/nav.html' %}
+
+{% block title %}
+<title>C E | Add Product Category</title>
+{% endblock %}
+
+{% block body_block %}
+<section class="container-fluid mt-4">
+    <div class="container p-3 shadow-lg">
+    <h2 class="text-center">Add Product Category</h2><hr>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" id="msg" role="alert">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+<script>
+  // Auto-hide messages after 10 seconds
+  setTimeout(function() {
+    var msg = document.getElementById('msg');
+    if (msg) {
+      msg.style.display = 'none';
+    }
+  }, 10000);
+</script>
+
+
+
+    <form class="form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="row m-auto ms-3">
+            <div class="col-6">
+                <div class="mb-3">
+                    <label for="pctid" class="form-label">Product Category ID:</label>
+                    <input type="number" name="pctid" id="pctid" class="form-control">
+                </div>
+                
+                
+                <div class="mb-3">
+                    <label for="pctname" class="form-label">Product Category Name:</label>
+                    <input type="text" name="pctname" id="pctname" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="pctimage" class="form-label">Product Image:</label>
+                    <input type="file" name="pctimage" id="pctimage" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 text-center mt-3">
+            <input type="submit" value="ADD" class="btn btn-success">
+
+        </div>
+    </form>
+   
+</div>
+</section>
+{% endblock %}

@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'app.middleware.SessionIdleTimeout',
 ]
 
 ROOT_URLCONF = 'classicelectricals.urls'
@@ -99,15 +100,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'msm875990@gmail.com'
-EMAIL_HOST_PASSWORD = 'irgtrugphhlvwmto'
-
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-COMPANY_EMAIL = 'msm875990@gmail.com'  # Where to receive contact messages
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER='classicelectricalqc@gmail.com'
+EMAIL_HOST_PASSWORD='mtwx fgiy cogu zxaf'
+EMAIL_USE_TLS=True
+EMAIL_USE_SSL=False
+EMAIL_PORT=587
+EMAIL_COMPANY='classicelectricalqc@gmail.com'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
@@ -136,3 +135,13 @@ STATIC_ROOT=(os.path.join(BASE_DIR, 'static'))
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_DIR=os.path.join(BASE_DIR, 'media')
+MEDIA_URL='/media/'
+MEDIA_ROOT=MEDIA_DIR
+
+# sessions expire after 30 minutes (1800 seconds)
+SESSION_COOKIE_AGE = 1800  # 30 minutes
+
+# clear the session when the browser is closed
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

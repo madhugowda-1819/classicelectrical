@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Classic Electricals - Gas Detector Products</title>
+    <link rel="shortcut icon" href="{% static 'images\companylogo.png' %}" type="image/x-icon">
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'js/bootstrap.bundle.min.js' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<header>
+  {% include 'includes/header.html' %}
+
+    <section>
+    <!-- Include header -->
+  <!-- <div id="header-placeholder"></div> -->
+  </section>
+</header>
+<body id="product">
+
+    <!-- <section class="container-fluid py-2 product">
+        <h1>Products</h1>
+    </section> -->
+
+    
+
+<section class="container-fluid py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold text-primary">{{pcategory.pctname}} Products</h2>
+      <p class="text-muted">Find products designed for industrial safety and precision inspection</p>
+    </div>
+
+    <div class="row g-4">
+     {% for product in PO %}
+  <div class="col-12 col-md-4 mb-4">
+    <a href="#" class="text-decoration-none text-dark">
+      <div class="card border-0 shadow-sm h-100 p-3 text-center">
+        
+        <!-- Product Name -->
+        <h6 class="fw-bold mb-2">{{ product.pname }}</h6>
+        
+        <!-- Product Image -->
+        <div class="mb-2">
+          <img src="{{ product.pimage.url }}" class="img-fluid rounded" alt="{{ product.pname }}" style="max-height: 200px; object-fit: contain;">
+        </div>
+        
+        <!-- Product Description -->
+         <h6 class="text-start fw-bold">Product Description:</h6>
+        <p class="text-muted mb-0" style="text-align: center;">{{ product.pdesc }}</p>
+        
+      </div>
+    </a>
+  </div>
+{% endfor %}
+
+    </div>
+  </div>
+</section>
+
+
+  {% include 'includes/footer.html' %}
+
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Load header from external file
+    fetch('includes/header.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('header-placeholder').innerHTML = data);
+      // Load header from external file
+    fetch('includes/footer.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('footer-placeholder').innerHTML = data);
+  </script>
+
+    {% include 'includes/icons.html' %}
+
+
+</body>
+</html>

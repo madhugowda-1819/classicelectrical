@@ -1,0 +1,108 @@
+{% extends 'admin/nav.html' %}
+{% load static %}
+
+{% block title %}
+<title>C E | About Information</title>
+{% endblock %}
+
+{% block body_block %}
+<section class="container-fluid mt-2 p-3">
+  <div class="container mt-1 shadow-lg p-4 rounded fs-6">
+     <h4 class="mb-3 text-center fw-bold">Page Settings</h4>
+    <div class="d-flex justify-content-start gap-4 fw-bold">
+        <div>
+            <a href="{% url 'aboutinfo' %}" class="text-decoration-none text-black">About</a>
+        </div>
+        <div>
+            <a href="{% url 'contactinfo' %}" class="text-decoration-none text-black">Contact</a>
+        </div>
+    </div>
+    <hr>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" id="msg" role="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <script>
+      // Auto-hide messages after 10 seconds
+      setTimeout(function() {
+        var msg = document.getElementById('msg');
+        if (msg) {
+          msg.style.display = 'none';
+        }
+      }, 10000);
+    </script>
+
+    <form method="POST" action="">
+      {% csrf_token %}
+
+      <!-- Vision -->
+      <div class="row mb-3">
+        <label for="editor1" class="col-sm-2 col-form-label fw-bold">Vision:</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" name="Vission" id="editor1">{{about.c_vision}}</textarea>
+        </div>
+      </div>
+
+      <!-- Mission -->
+      <div class="row mb-3">
+        <label for="Mission" class="col-sm-2 col-form-label fw-bold">Mission:</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" name="Mission" id="Mission">{{about.c_mission}}</textarea>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="d-flex justify-content-center gap-2 mt-2">
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-save"></i> Save Changes
+        </button>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">
+          <i class="bi bi-arrow-left-circle"></i> Back
+        </a>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Include CKEditor (latest LTS build) -->
+<script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
+<script>
+  // Common toolbar for both editors
+  const toolbarConfig = [
+    { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike' ] },
+    { name: 'styles', items: [ 'Font', 'FontSize', 'TextColor', 'BGColor' ] },
+    { name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight' ] },
+    { name: 'insert', items: [ 'Table', 'Image', 'HorizontalRule' ] },
+    { name: 'tools', items: [ 'Maximize', 'Source' ] }
+  ];
+
+  CKEDITOR.replace('editor1', {
+    height: 100,
+    toolbar: toolbarConfig,
+    removePlugins: 'flash,iframe,forms,pagebreak'
+  });
+
+  CKEDITOR.replace('Mission', {
+    height: 100,
+    toolbar: toolbarConfig,
+    removePlugins: 'flash,iframe,forms,pagebreak'
+  });
+</script>
+
+<style>
+/* Make CKEditor toolbar compact */
+.cke_top {
+  padding: 3px !important;
+}
+.cke_combo__font .cke_combo_text,
+.cke_combo__fontsize .cke_combo_text {
+  width: auto !important;
+}
+</style>
+
+{% endblock %}

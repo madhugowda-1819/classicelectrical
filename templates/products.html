@@ -21,13 +21,16 @@
 </header>
 <body id="product">
 
-    <section class="container-fluid py-2 product">
+    <!-- <section class="container-fluid py-2 product">
         <h1>Products</h1>
-    </section>
+    </section> -->
 
     
 
 <section class="container-fluid py-5 bg-light">
+  <div class="text-black text-center">
+        <h1 class=" fw-bold">Products</h1>
+  </div>
   <div class="container">
     <div class="text-center mb-5">
       <h2 class="fw-bold text-primary">Explore Our Categories</h2>
@@ -36,85 +39,30 @@
 
     <div class="row g-4">
 
+      {% for pcategory in category|slice:":5" %}
+
       <!-- Category 1 -->
       <div class="col-12 col-md-4">
-        <a href="/product" class="text-decoration-none text-dark">
-          <div class="card border-0 shadow-sm d-flex flex-row align-items-center p-3 gap-3 h-100">
+        <a href="{% url 'category' pcategory.pctid %}" class="text-decoration-none text-dark">
+          <div class="card border-1 shadow-md d-flex flex-row align-items-center p-3 gap-3 h-100">
             <div class="flex-shrink-0" style="width: 100px;">
-              <img src="/static/images/Portable Type gas detector.jpg" class="img-fluid rounded" alt="Portable Type Gas Detector">
+              <img src="{{pcategory.pimage.url}}" class="img-fluid rounded" alt="{{pcategory.pctname}}">
             </div>
             <div>
-              <h6 class="fw-bold mb-1">Portable Type Gas Detector</h6>
-              <small class="text-muted">15 products available</small>
+              <h6 class="fw-bold mb-1">{{pcategory.pctname}}</h6>
+              <small class="text-muted">{{pcategory.total_products}} Products Available</small>
             </div>
           </div>
         </a>
       </div>
 
-      <!-- Category 2 -->
-      <div class="col-12 col-md-4">
-        <a href="/product" class="text-decoration-none text-dark">
-          <div class="card border-0 shadow-sm d-flex flex-row align-items-center p-3 gap-3 h-100">
-            <div class="flex-shrink-0" style="width: 100px;">
-              <img src="/static/images/Fixed Type Gas detector.jpg" class="img-fluid rounded" alt="Fixed Type Gas Detector">
-            </div>
-            <div>
-              <h6 class="fw-bold mb-1">Fixed Type Gas Detectors - CE100 Series</h6>
-              <small class="text-muted">13 products available</small>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <!-- Category 3 -->
-      <div class="col-12 col-md-4">
-        <a href="/product" class="text-decoration-none text-dark">
-          <div class="card border-0 shadow-sm d-flex flex-row align-items-center p-3 gap-3 h-100">
-            <div class="flex-shrink-0" style="width: 100px;">
-              <img src="/static/images/Borescope-4-Photoroom-2-1-225x300.png" class="img-fluid rounded" alt="Borescope">
-            </div>
-            <div>
-              <h6 class="fw-bold mb-1">Borescope</h6>
-              <small class="text-muted">11 products available</small>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <!-- Category 4 -->
-      <div class="col-12 col-md-4">
-        <a href="/product" class="text-decoration-none text-dark">
-          <div class="card border-0 shadow-sm d-flex flex-row align-items-center p-3 gap-3 h-100">
-            <div class="flex-shrink-0" style="width: 100px;">
-              <img src="/static/images/Industrial Machine Vision Camera.jpg" class="img-fluid rounded" alt="Industrial Machine Vision Camera">
-            </div>
-            <div>
-              <h6 class="fw-bold mb-1">Industrial Machine Vision Camera</h6>
-              <small class="text-muted">9 products available</small>
-            </div>
-          </div>
-        </a>
-      </div>
-
-      <!-- Category 5 -->
-      <div class="col-12 col-md-4">
-        <a href="/product" class="text-decoration-none text-dark">
-          <div class="card border-0 shadow-sm d-flex flex-row align-items-center p-3 gap-3 h-100">
-            <div class="flex-shrink-0" style="width: 100px;">
-              <img src="/static/images/Portable Alcohol Breath Analyzer.jpg" class="img-fluid rounded" alt="Portable Alcohol Breath Analyzer">
-            </div>
-            <div>
-              <h6 class="fw-bold mb-1">Portable Alcohol Breath Analyzer</h6>
-              <small class="text-muted">4 products available</small>
-            </div>
-          </div>
-        </a>
-      </div>
+      {% endfor %}
+      
 
       <!-- View All -->
       <div class="col-12 col-md-4 d-flex align-items-center justify-content-center">
-        <a href="/product" class="text-decoration-none fw-bold text-primary">
-          View complete range →
+        <a href="{% url 'allcategories' %}" class="text-decoration-none fw-bold text-primary">
+          View All Categories→
         </a>
       </div>
 
