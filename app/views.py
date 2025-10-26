@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.hashers import check_password, make_password
 from django.core.mail import send_mail
 from app.models import *
@@ -8,7 +8,9 @@ from django.core.paginator import Paginator
 from classicelectricals import settings
 from django.contrib.auth.decorators import login_required
 from app.decorators import admin_login_required
+from django.utils.text import slugify
 import datetime
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -30,6 +32,9 @@ def requestq(request):
 
 def page(request):
     id = request.session.get('id')
+    if not id:
+        return redirect('adminlogin')
+    
     admin = WebsiteAdmin.objects.get(id=id)
 
     contactin, created_c = ContactInfo.objects.get_or_create(pk=1)
@@ -61,15 +66,16 @@ def allcategories(request):
     category=ProductCategory.objects.annotate(total_products=Count('products'))
     return render(request, 'allcategories.html', {'category':category})
 
-def category(request, pid):
-    pcategory=ProductCategory.objects.get(pctid=pid)
-    PO=Products.objects.filter(pctid=pcategory)
-    return render(request, 'category.html', {'PO':PO, 'pcategory':pcategory})
+def category(request, pid, pctname):
+    pcategory = get_object_or_404(ProductCategory, pctid=pid)
+    PO = Products.objects.filter(pctid=pcategory)
 
-def minivisioncameras(request):
-    pcategory=ProductCategory.objects.get(pctname='Machine Vision Cameras')
-    PO=Products.objects.filter(pctid=pcategory)
-    return render(request, 'minivisioncameras.html', {'PO':PO})
+    # Optional: if pctname in URL doesn’t match actual name, redirect to correct one
+    correct_name = slugify(pcategory.pctname)
+    if pctname != correct_name:
+        return redirect('category', pid=pid, pctname=correct_name)
+
+    return render(request, 'category.html', {'PO': PO, 'pcategory': pcategory})
 
 def contact_email(request):
     if request.method == "POST":
@@ -127,6 +133,8 @@ def request_email(request):
 @admin_login_required
 def admin_dashboard(request):
     aid = request.session.get('id')
+    if not id:
+        return redirect('adminlogin')
     admin = WebsiteAdmin.objects.get(id=aid)
     totaladmin = WebsiteAdmin.objects.count()
     totalcount=Products.objects.count()
@@ -136,6 +144,8 @@ def admin_dashboard(request):
 @admin_login_required
 def profile(request,id):
     aid = request.session.get('id')
+    if not id:
+        return redirect('adminlogin')
     try:
         admin = WebsiteAdmin.objects.get(id=aid)
 
@@ -154,6 +164,9 @@ def profile(request,id):
 @admin_login_required
 def changepassword(request, id):
     aid=request.session.get('id')
+    if not id:
+        return redirect('adminlogin')
+    
     admin=WebsiteAdmin.objects.get(id=aid)
 
     if request.method=='POST':
@@ -190,29 +203,13 @@ def admin_logout(request):
     return redirect('adminlogin')
 
 
-class SessionIdleTimeout:
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        if request.session.get('id'):  # your admin session key
-            now = datetime.datetime.now()
-            last_activity = request.session.get('last_activity')
-
-            if last_activity:
-                elapsed = (now - datetime.datetime.fromisoformat(last_activity)).total_seconds()
-                if elapsed > settings.SESSION_COOKIE_AGE:
-                    request.session.flush()  # logout admin
-                    return redirect('adminlogin')  # your login page url name
-
-            request.session['last_activity'] = now.isoformat()
-
-        response = self.get_response(request)
-        return response
 
 ######################### Products categories#########################################
 def addproductcategory(request):
     id = request.session.get('id')
+    if not id:
+        return redirect('adminlogin')
+    
     admin = WebsiteAdmin.objects.get(id=id)
     if request.method=='POST':
         pctid=request.POST.get('pctid')
@@ -233,6 +230,9 @@ def addproductcategory(request):
 
 def manageproductcategory(request):
     id = request.session.get('id')
+    if not id:
+        return redirect('adminlogin')
+    
     admin = WebsiteAdmin.objects.get(id=id)
     
     search_query = request.GET.get('search', '')
@@ -249,6 +249,9 @@ def manageproductcategory(request):
 
 def editproductcategory(request, pctid):
     id = request.session.get('id')
+    if not id:
+        return redirect('adminlogin')
+    
     admin = WebsiteAdmin.objects.get(id=id)
 
     # get the category by pctid
@@ -276,6 +279,9 @@ def editproductcategory(request, pctid):
 
 def delete_product_category(request, pid):
     id=request.session.get('id')
+    if not id:
+        return redirect('adminlogin')
+    
     admin=WebsiteAdmin.objects.get(id=id)
     product_cat=ProductCategory.objects.get(pctid=pid)
     product_cat.delete()
@@ -284,6 +290,9 @@ def delete_product_category(request, pid):
 
 def addproducts(request):
     id = request.session.get('id')
+    if not id:
+        return redirect('adminlogin')
+    
     admin = WebsiteAdmin.objects.get(id=id)
     PCO = ProductCategory.objects.all()
 
@@ -291,23 +300,30 @@ def addproducts(request):
         pid = request.POST.get('product_id')
         pname = request.POST.get('product_name')
         pctname = request.POST.get('product_category')
-        pimage = request.FILES.get('product_image')
+        pimage = request.FILES.get('product_image')  # main image
         pprice = request.POST.get('product_price')
         pdesc = request.POST.get('product_description')
+
+        # multiple images
+        extra_images = request.FILES.getlist('extra_images')  
 
         try:
             # validate category safely
             PCTO = ProductCategory.objects.get(pctid=pctname)
 
             # create the product
-            Products.objects.create(
+            product = Products.objects.create(
                 pid=pid,
                 pname=pname,
                 pctid=PCTO,
-                pimage=pimage,
+                pimage=pimage,  # main image
                 pprice=pprice,
                 pdesc=pdesc
             )
+
+            # save multiple extra images
+            for img in extra_images:
+                ProductImage.objects.create(product=product, image=img)
 
             # ✅ success message
             messages.success(request, '✅ Product added successfully!')
@@ -317,13 +333,15 @@ def addproducts(request):
             messages.error(request, '⚠️ Selected category does not exist.')
         except Exception as e:
             print(e)
-            messages.error(request, '⚠️ Something went wrong while adding product.')
+            messages.error(request, f'⚠️ Something went wrong: {e}')
 
     return render(request, 'admin/addproduct.html', {'admin': admin, 'PCO': PCO})
 
-
 def manageproducts(request):
     id = request.session.get('id')
+    if not id:
+        return redirect('adminlogin')
+    
     admin = WebsiteAdmin.objects.get(id=id)
     
     search_query = request.GET.get('search', '')
@@ -340,6 +358,9 @@ def manageproducts(request):
 
 def editproduct(request, pid):
     id = request.session.get('id')
+    if not id:
+        return redirect('adminlogin')
+    
     admin = WebsiteAdmin.objects.get(id=id)
     PDO = Products.objects.get(pid=pid)
     PCO = ProductCategory.objects.all()
@@ -351,33 +372,44 @@ def editproduct(request, pid):
         pimage = request.FILES.get('product_image')
         pprice = request.POST.get('product_price')
         pdesc = request.POST.get('product_description')
+        extra_images = request.FILES.getlist('extra_images')  
 
         try:
-            # update fields
+            # update product fields
             PDO.pname = pname
             PDO.pctid = PCTO
-            if pimage:  # update only if a new file is uploaded
+            if pimage:  # update only if a new main image is uploaded
                 PDO.pimage = pimage
             PDO.pprice = pprice
             PDO.pdesc = pdesc
-
             PDO.save()
-            # ✅ Success message only if save passes
+
+            # ✅ Save new extra images
+            if extra_images:
+                for img in extra_images:
+                    ProductImage.objects.create(product=PDO, image=img)
+
             messages.success(request, '✅ Product updated successfully!')
             return redirect('editproduct', pid=pid)
 
         except Exception as e:
-            print(e)
-            # ⚠️ Error message only if something goes wrong
+            print("Error while updating product:", e)
             messages.error(request, '⚠️ Something went wrong while updating product.')
             return redirect('editproduct', pid=pid)
 
-    return render(request, 'admin/editproduct.html', {'admin': admin, 'PCO': PCO, 'PDO': PDO})
+    return render(request, 'admin/editproduct.html', {
+        'admin': admin,
+        'PCO': PCO,
+        'PDO': PDO
+    })
 
 
 
 def delete_product(request, pid):
     id=request.session.get('id')
+    if not id:
+        return redirect('adminlogin')
+    
     admin=WebsiteAdmin.objects.get(id=id)
     product=Products.objects.get(pid=pid)
     product.delete()

@@ -7,6 +7,30 @@
     background-position: center; 
     height: auto;
   }
+  
+  /* Custom button styling */
+  .custom-btn {
+    background-color: #ff9800;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+  }
+
+  .custom-btn:hover {
+    background-color: #e68900;
+    color: #fff;
+  }
+
+  /* Navigation links */
+  .navbar-nav .nav-link {
+    color: #ffffff !important;
+    font-weight: 600;
+  }
+
+  .navbar-nav .nav-link:hover {
+    color: #ff9800 !important;
+  }
+
  </style>
 <section class="">
     <header>
@@ -15,7 +39,7 @@
       <div class="container-fluid">
         <!-- Logo -->
         <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
-          <img src="{% static 'images/classicicon.png' %}" alt="Classic Electricals Logo" class="img-fluid me-2" style="height: 100px; filter: brightness(3.0);" />
+          <img src="{% static 'images/classiceleicon.png' %}" alt="Classic Electricals Logo" class="img-fluid me-2" style="height: 50px; filter: brightness(1.5);" />
         </a>
 
         <!-- Toggler for mobile -->

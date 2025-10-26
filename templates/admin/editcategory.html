@@ -7,53 +7,59 @@
 {% block body_block %}
 <section class="container-fluid mt-4">
     <div class="container p-3 shadow-lg">
-        <h2 class="text-center">Update Product Category</h2><hr>
-
-            {% if messages %}
-              {% for message in messages %}
+        <h2 class="text-center">Update Product Category</h2>
+        <hr>
+        <div>
+            <span class="text-danger fw-bold">*</span> All Fields Are Mandatory 
+        </div>
+        <br>
+        {% if messages %}
+            {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} text-center" id="msg" role="alert">
-                  {{ message }}
+                    {{ message }}
                 </div>
-              {% endfor %}
-            {% endif %}
-            
-            <script>
-              // Auto-hide messages after 10 seconds
-              setTimeout(function() {
+            {% endfor %}
+        {% endif %}
+
+        <script>
+            // Auto-hide messages after 10 seconds
+            setTimeout(function() {
                 var msg = document.getElementById('msg');
                 if (msg) {
-                  msg.style.display = 'none';
+                    msg.style.display = 'none';
                 }
-              }, 10000);
-            </script>
-
+            }, 10000);
+        </script>
 
         <form class="form" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="row m-auto ms-3">
-                <div class="col-6">
+            <div class="row g-3">
+                <div class="col-12 col-md-6 fw-bold">
                     <div class="mb-3">
-                        <label for="product_cat_id" class="form-label">Product Category ID:</label>
-                        <input type="number" name="product_cat_id" id="product_cat_id" 
-                               class="form-control" value="{{category.pctid}}" readonly>
+                        <label for="product_cat_id" class="form-label">Product Category ID:<span class="text-danger">*</span></label>
+                        <input type="number" name="product_cat_id" id="product_cat_id"
+                               class="form-control" value="{{ category.pctid }}" readonly required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="product_category_name" class="form-label">Product Category Name:</label>
-                        <input type="text" name="product_category_name" id="product_category_name" class="form-control" value="{{category.pctname}}" >
+                        <label for="product_category_name" class="form-label">Product Category Name:<span class="text-danger">*</span></label>
+                        <input type="text" name="product_category_name" id="product_category_name"
+                               class="form-control" value="{{ category.pctname }}" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="product_cat_image" class="form-label">Product Image:</label>
-                        <input type="file" name="product_cat_image" id="product_cat_image" class="form-control">
+                        <label for="product_cat_image" class="form-label">Product Image:<span class="text-danger">*</span></label>
+                        <input type="file" name="product_cat_image" id="product_cat_image" class="form-control" required>
                         {% if category.pimage %}
-                            <img src="{{ category.pimage.url }}" alt="Current Image" 
-                                 style="max-width:70px; margin-top:5px; border:1px solid #ccc;">
+                            <div class="mt-2">
+                                <img src="{{ category.pimage.url }}" alt="Current Image"
+                                     class="img-fluid rounded" style="max-width: 100px; border:1px solid #ccc;">
+                            </div>
                         {% endif %}
                     </div>
                 </div>
             </div>
-            
+
             <div class="mb-3 text-center mt-3">
                 <input type="submit" value="Update" class="btn btn-success">
             </div>

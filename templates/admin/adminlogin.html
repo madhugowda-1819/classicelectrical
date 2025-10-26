@@ -8,28 +8,28 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 </head>
 <body class="bg-secondary">
-    <section class="container-fluid mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-4 m-auto">
-                    <div class="card p-3 text-center shadow-lg rounded" style="background: linear-gradient(45deg, #901834, #d82626);">
-                        <h3 class="text-white fw-bold">Admin Login</h3>
+    <section class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="row w-100">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4 m-auto">
+                <div class="card p-4 text-center shadow-lg rounded"
+                     style="background: linear-gradient(45deg, #901834, #d82626);">
+                    <h3 class="text-white fw-bold mb-3">Admin Login</h3>
 
-                        <div class="mt-2">
-                            
-                            <form method="POST">
+                    <form method="POST" class="px-2">
                         {% csrf_token %}
-                        <input type="text" name="username" class="form-control" placeholder="Username" required><br>
-                        <input type="password" name="password" class="form-control" placeholder="Password" required><br>
-                        <input type="submit" class="btn btn-outline-success text-center fw-bold" value="Login">
+                        <div class="mb-3">
+                            <input type="text" name="username" class="form-control" placeholder="Username" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" name="password" class="form-control" placeholder="Password" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" class="btn btn-outline-success  fw-bold" value="Login">
+                        </div>
                         {% if error %}
-                            <p style="color:white;">{{ error }}</p>
+                            <p class="text-white">{{ error }}</p>
                         {% endif %}
                     </form>
-                        </div>
-                        
-                    </div>
-
                 </div>
             </div>
         </div>
