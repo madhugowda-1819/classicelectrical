@@ -54,9 +54,19 @@
 
       {% if messages %}
         {% for message in messages %}
-          <div class="alert alert-success">{{ message }}</div>
+          <div class="alert alert-success" id="msg">{{ message }}</div>
         {% endfor %}
       {% endif %}
+
+      <script>
+          // Auto-hide messages after 10 seconds
+          setTimeout(function() {
+            var msg = document.getElementById('msg');
+            if (msg) {
+              msg.style.display = 'none';
+            }
+          }, 10000);
+        </script>
 
       <form method="POST" action="{% url 'contact_email' %}">
         {% csrf_token %}

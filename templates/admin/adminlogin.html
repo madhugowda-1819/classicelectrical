@@ -23,8 +23,9 @@
                         <div class="mb-3">
                             <input type="password" name="password" class="form-control" placeholder="Password" required>
                         </div>
-                        <div class="mb-3">
-                            <input type="submit" class="btn btn-outline-success  fw-bold" value="Login">
+                        <div class="mb-3 gap-2">
+                             <a href="{% url 'index' %}" class="btn btn-outline-primary fw-bold"> ← Back</a>
+                            <input type="submit" class="btn btn-outline-success  fw-bold" value="Login →">
                         </div>
                         {% if error %}
                             <p class="text-white">{{ error }}</p>

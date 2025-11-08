@@ -59,7 +59,7 @@
 
 #classic {
   margin-top: 0;
-  height: auto;
+  height: 300px;
   padding: 20px;
 }
 
@@ -154,3 +154,4 @@
     margin-top: 80px;
   }
 }
+

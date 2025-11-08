@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from app.decorators import admin_login_required
 from django.utils.text import slugify
 import datetime
+import re
 
 # Create your views here.
 def index(request):
@@ -85,6 +86,32 @@ def contact_email(request):
         subject = request.POST.get("subject", "No Subject")
         message = request.POST.get("message")
 
+        #validations
+        name_pattern= r'^[A-Za-z ]+$'
+        email_pattern=r'^[a-z1-9]*[._%+-]?[a-z0-9]+@gmail[.]com$'
+        mobile_pattern=r'^[6-9]\d{9}$'
+        text_pattern = r'^[A-Za-z0-9\s.,!?@#$%^&*()_\-+=:;\'"<>/\\|`~]*$'
+
+        if not re.match(name_pattern, name):
+            messages.error(request, 'Invalid  Name! only alphabets and spaces allowed.')
+            return redirect('contact')
+        
+        if not re.match(email_pattern, email):
+            messages.error(request, 'Invalid  Email! Only Gmail addresses are allowed.')
+            return redirect('contact')
+        
+        if not re.match(mobile_pattern, mobile):
+            messages.error(request, 'Invalid mobile number! Must start with 6–9 and be 10 digits.')
+            return redirect('contact')
+        
+        if not re.match(text_pattern, subject):
+            messages.error(request, 'Invalid subject! Only alphabets, digits, and special characters are allowed.')
+            return redirect('contact')
+        
+        if not re.match(text_pattern, message):
+            messages.error(request, 'Invalid message! Only alphabets, digits, and special characters are allowed.')
+            return redirect('contact')
+
         full_message = f"""
         Name: {name}
         Email: {email}
@@ -110,6 +137,32 @@ def request_email(request):
         mobile = request.POST.get("mobile")
         subject = request.POST.get("subject", "No Subject")
         message = request.POST.get("message")
+
+        #validations
+        name_pattern= r'^[A-Za-z ]+$'
+        email_pattern=r'^[a-z1-9]*[._%+-]?[a-z0-9]+@gmail[.]com$'
+        mobile_pattern=r'^[6-9]\d{9}$'
+        text_pattern = r'^[A-Za-z0-9\s.,!?@#$%^&*()_\-+=:;\'"<>/\\|`~]*$'
+
+        if not re.match(name_pattern, name):
+            messages.error(request, 'Invalid  Name! only alphabets and spaces allowed.')
+            return redirect('requestq')
+        
+        if not re.match(email_pattern, email):
+            messages.error(request, 'Invalid  Email! Only Gmail addresses are allowed.')
+            return redirect('requestq')
+        
+        if not re.match(mobile_pattern, mobile):
+            messages.error(request, 'Invalid mobile number! Must start with 6–9 and be 10 digits.')
+            return redirect('requestq')
+        
+        if not re.match(text_pattern, subject):
+            messages.error(request, 'Invalid subject! Only alphabets, digits, and special characters are allowed.')
+            return redirect('requestq')
+        
+        if not re.match(text_pattern, message):
+            messages.error(request, 'Invalid message! Only alphabets, digits, and special characters are allowed.')
+            return redirect('requestq')
 
         full_message = f"""
         Name: {name}
@@ -151,6 +204,13 @@ def profile(request,id):
 
         if request.method == 'POST':
             email = request.POST.get('email')
+
+            email_pattern=r'^[a-z1-9]*[._%+-]?[a-z0-9]+@gmail[.]com$'
+
+            if not re.match(email_pattern, email):
+                messages.error(request, 'Invalid  Email! Only Gmail addresses are allowed.')
+                return redirect('profile', id=admin.id)
+
             admin.email = email
             admin.save()
             messages.success(request, "Profile updated successfully.")
@@ -171,6 +231,21 @@ def changepassword(request, id):
 
     if request.method=='POST':
         npw=request.POST['npw']
+
+        # -------- PASSWORD VALIDATION --------
+        # Must contain: 1 uppercase, 1 digit, 1 special char, and at least 8 chars
+        pattern = r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
+
+        if not re.fullmatch(pattern, npw or ''):
+            messages.error(
+                request,
+                'Invalid Password: Must be at least 8 characters long\n'
+                '''At least one uppercase letter \n 
+                one digit \n  
+                one special character.'''
+            )
+            return redirect('changepassword', id=admin.id)
+        
         admin.password=make_password(npw)
         admin.save()
         messages.success(request, 'Password Changed Successfully.')
@@ -215,6 +290,25 @@ def addproductcategory(request):
         pctid=request.POST.get('pctid')
         pctname=request.POST.get('pctname')
         pctimage=request.FILES.get('pctimage')
+
+        #validations
+        if not re.fullmatch(r'\d+', pctid or ''):
+            messages.error(request, 'Invalid ID: Only digits are allowed.')
+            return redirect('addproductcategory')
+        
+        if not re.fullmatch(r'[A-Za-z0-9 ]+', pctname or ''):
+            messages.error(request, 'Invalid Name: Only letters, digits, and spaces are allowed.')
+            return redirect('addproductcategory')
+        
+        if pctimage:
+            allowed_extensions = ['jpg', 'jpeg', 'png']
+            file_ext = pctimage.name.split('.')[-1].lower()
+            if file_ext not in allowed_extensions:
+                messages.error(request, 'Invalid Image Format: Only JPG, JPEG, or PNG allowed.')
+                return redirect('addproductcategory')
+        else:
+            messages.error(request, 'Please upload an image file.')
+            return redirect('addproductcategory')
 
         try:
             ProductCategory.objects.create(pctid=pctid, pctname=pctname, pimage=pctimage)
@@ -261,6 +355,21 @@ def editproductcategory(request, pctid):
         pctname = request.POST.get('product_category_name')
         pctimage = request.FILES.get('product_cat_image')
 
+        #validations
+        if not re.fullmatch(r'[A-Za-z0-9 ]+', pctname or ''):
+            messages.error(request, 'Invalid Name: Only letters, digits, and spaces are allowed.')
+            return redirect('editproductcategory', pctid=pctid)
+        
+        if pctimage:
+            allowed_extensions = ['jpg', 'jpeg', 'png']
+            file_ext = pctimage.name.split('.')[-1].lower()
+            if file_ext not in allowed_extensions:
+                messages.error(request, 'Invalid Image Format: Only JPG, JPEG, or PNG allowed.')
+                return redirect('editproductcategory', pctid=pctid)
+        else:
+            messages.error(request, 'Please upload an image file.')
+            return redirect('editproductcategory', pctid=pctid)
+
         try:
             category.pctname = pctname
             category.pimage = pctimage
@@ -303,9 +412,53 @@ def addproducts(request):
         pimage = request.FILES.get('product_image')  # main image
         pprice = request.POST.get('product_price')
         pdesc = request.POST.get('product_description')
+        extra_images = request.FILES.getlist('extra_images')  # multiple images
 
-        # multiple images
-        extra_images = request.FILES.getlist('extra_images')  
+        # -------- VALIDATIONS --------
+        # 1️⃣ Product ID - only digits
+        if not re.fullmatch(r'\d+', pid or ''):
+            messages.error(request, 'Invalid Product ID: Only digits are allowed.')
+            return redirect('addproducts')
+
+        # 2️⃣ Product Name - only letters, numbers, and spaces
+        if not re.fullmatch(r'[A-Za-z0-9 ]+', pname or ''):
+            messages.error(request, 'Invalid Product Name: Only letters, digits, and spaces are allowed.')
+            return redirect('addproducts')
+
+        # 3️⃣ Category validation (must exist)
+        try:
+            PCTO = ProductCategory.objects.get(pctid=pctname)
+        except ProductCategory.DoesNotExist:
+            messages.error(request, 'Invalid Category selected.')
+            return redirect('addproducts')
+
+        # 4️⃣ Main image validation
+        if pimage:
+            allowed_ext = ['jpg', 'jpeg', 'png']
+            file_ext = pimage.name.split('.')[-1].lower()
+            if file_ext not in allowed_ext:
+                messages.error(request, 'Invalid Main Image: Only JPG, JPEG, PNG allowed.')
+                return redirect('addproducts')
+        else:
+            messages.error(request, 'Please upload a main product image.')
+            return redirect('addproducts')
+
+        # 5️⃣ Price validation - only numbers (with optional decimal)
+        if not re.fullmatch(r'\d+(\.\d{1,2})?', pprice or ''):
+            messages.error(request, 'Invalid Price: Only numbers or decimal values allowed.')
+            return redirect('addproducts')
+
+        # 6️⃣ Description - must not be empty and max 500 chars (you can adjust)
+        if not pdesc or len(pdesc.strip()) < 5:
+            messages.error(request, 'Invalid Description: Minimum 5 characters required.')
+            return redirect('addproducts')
+
+        # 7️⃣ Extra images validation
+        for img in extra_images:
+            ext = img.name.split('.')[-1].lower()
+            if ext not in ['jpg', 'jpeg', 'png']:
+                messages.error(request, f'Invalid Extra Image "{img.name}": Only JPG, JPEG, PNG allowed.')
+                return redirect('addproducts')
 
         try:
             # validate category safely
@@ -373,6 +526,47 @@ def editproduct(request, pid):
         pprice = request.POST.get('product_price')
         pdesc = request.POST.get('product_description')
         extra_images = request.FILES.getlist('extra_images')  
+
+        # -------- VALIDATIONS --------
+        # 2️⃣ Product Name - only letters, numbers, and spaces
+        if not re.fullmatch(r'[A-Za-z0-9 ]+', pname or ''):
+            messages.error(request, 'Invalid Product Name: Only letters, digits, and spaces are allowed.')
+            return redirect('editproduct', pid=pid)
+
+        # 3️⃣ Category validation (must exist)
+        try:
+            PCTO = ProductCategory.objects.get(pctid=pctname)
+        except ProductCategory.DoesNotExist:
+            messages.error(request, 'Invalid Category selected.')
+            return redirect('editproduct', pid=pid)
+
+        # 4️⃣ Main image validation
+        if pimage:
+            allowed_ext = ['jpg', 'jpeg', 'png']
+            file_ext = pimage.name.split('.')[-1].lower()
+            if file_ext not in allowed_ext:
+                messages.error(request, 'Invalid Main Image: Only JPG, JPEG, PNG allowed.')
+                return redirect('editproduct', pid=pid)
+        else:
+            messages.error(request, 'Please upload a main product image.')
+            return redirect('editproduct', pid=pid)
+
+        # 5️⃣ Price validation - only numbers (with optional decimal)
+        if not re.fullmatch(r'\d+(\.\d{1,2})?', pprice or ''):
+            messages.error(request, 'Invalid Price: Only numbers or decimal values allowed.')
+            return redirect('editproduct', pid=pid)
+
+        # 6️⃣ Description - must not be empty and max 500 chars (you can adjust)
+        if not pdesc or len(pdesc.strip()) < 5:
+            messages.error(request, 'Invalid Description: Minimum 5 characters required.')
+            return redirect('editproduct', pid=pid)
+
+        # 7️⃣ Extra images validation
+        for img in extra_images:
+            ext = img.name.split('.')[-1].lower()
+            if ext not in ['jpg', 'jpeg', 'png']:
+                messages.error(request, f'Invalid Extra Image "{img.name}": Only JPG, JPEG, PNG allowed.')
+                return redirect('editproduct', pid=pid)
 
         try:
             # update product fields

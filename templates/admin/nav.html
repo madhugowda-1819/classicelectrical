@@ -12,7 +12,7 @@
 
 <!-- TOP NAVBAR -->
 <nav class="navbar navbar-dark px-3 py-2 d-flex justify-content-between align-items-center flex-wrap"
-     style="background:linear-gradient(45deg, red, rgb(39, 211, 238));">
+     style="background-color: black;">
 
   <div class="d-flex align-items-center">
     <!-- Offcanvas toggle -->
@@ -44,8 +44,8 @@
 <div class="container-fluid">
   <div class="row flex-nowrap">
     <!-- DESKTOP SIDEBAR (visible lg and up) -->
-    <div class="col-auto d-none d-lg-flex flex-column vh-100 p-2 text-white"
-         style="width:250px;background:linear-gradient(45deg,rgb(39,211,238),red);">
+    <div class="col-auto d-none d-lg-flex flex-column  p-2 text-white"
+         style="width:250px;background-color: #5a5a5a;">
       <ul class="nav nav-pills flex-column mb-auto fw-bold">
         <li class="nav-item">
           <a href="{% url 'admin_dashboard' %}" class="nav-link text-white"><i class="bi bi-speedometer2"></i> Dashboard</a>
@@ -124,11 +124,10 @@
     </div>
 
     <!-- MAIN CONTENT -->
-    <main class="col px-0 d-flex flex-column vh-100">
+    <main class="col px-0 d-flex flex-column vh-100 ">
       <div class="flex-grow-1 overflow-auto p-4 bg-light">
         {% block body_block %}
-        <h1>Main Content</h1>
-        <p style="height:1500px;">Scroll content here…</p>
+        
         {% endblock %}
       </div>
     </main>

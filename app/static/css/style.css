@@ -59,8 +59,8 @@
 
 #classic {
   margin-top: 0;
-  height: auto;
-  padding: 20px;
+  height: 1;
+  padding: 15px;
 }
 
 #classic h3 {
@@ -154,3 +154,4 @@
     margin-top: 80px;
   }
 }
+
