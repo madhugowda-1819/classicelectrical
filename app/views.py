@@ -410,7 +410,6 @@ def addproducts(request):
         pname = request.POST.get('product_name')
         pctname = request.POST.get('product_category')
         pimage = request.FILES.get('product_image')  # main image
-        pprice = request.POST.get('product_price')
         pdesc = request.POST.get('product_description')
         extra_images = request.FILES.getlist('extra_images')  # multiple images
 
@@ -443,10 +442,6 @@ def addproducts(request):
             messages.error(request, 'Please upload a main product image.')
             return redirect('addproducts')
 
-        # 5️⃣ Price validation - only numbers (with optional decimal)
-        if not re.fullmatch(r'\d+(\.\d{1,2})?', pprice or ''):
-            messages.error(request, 'Invalid Price: Only numbers or decimal values allowed.')
-            return redirect('addproducts')
 
         # 6️⃣ Description - must not be empty and max 500 chars (you can adjust)
         if not pdesc or len(pdesc.strip()) < 5:
@@ -470,7 +465,6 @@ def addproducts(request):
                 pname=pname,
                 pctid=PCTO,
                 pimage=pimage,  # main image
-                pprice=pprice,
                 pdesc=pdesc
             )
 
@@ -523,7 +517,6 @@ def editproduct(request, pid):
         pctname = request.POST.get('product_category')
         PCTO = ProductCategory.objects.get(pctid=pctname)
         pimage = request.FILES.get('product_image')
-        pprice = request.POST.get('product_price')
         pdesc = request.POST.get('product_description')
         extra_images = request.FILES.getlist('extra_images')  
 
@@ -551,10 +544,6 @@ def editproduct(request, pid):
             messages.error(request, 'Please upload a main product image.')
             return redirect('editproduct', pid=pid)
 
-        # 5️⃣ Price validation - only numbers (with optional decimal)
-        if not re.fullmatch(r'\d+(\.\d{1,2})?', pprice or ''):
-            messages.error(request, 'Invalid Price: Only numbers or decimal values allowed.')
-            return redirect('editproduct', pid=pid)
 
         # 6️⃣ Description - must not be empty and max 500 chars (you can adjust)
         if not pdesc or len(pdesc.strip()) < 5:
@@ -574,7 +563,6 @@ def editproduct(request, pid):
             PDO.pctid = PCTO
             if pimage:  # update only if a new main image is uploaded
                 PDO.pimage = pimage
-            PDO.pprice = pprice
             PDO.pdesc = pdesc
             PDO.save()
 

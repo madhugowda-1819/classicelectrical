@@ -1,13 +1,21 @@
 {% load static %}
-<!-- header.html -->
- <style>
-  header{
-    background-image: url('../../static/images/pexels-life-of-pix-2391.jpg'); 
-    background-size: cover; 
-    background-position: center; 
-    height: auto;
+
+<style>
+  /* Header background image */
+  header {
+    background-image: url("{% static 'images/pexels-life-of-pix-2391.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    width: 100%;
   }
-  
+
+  /* Make navbar fixed at top with transparent background */
+  .navbar.fixed-top {
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent */
+    backdrop-filter: blur(4px);
+  }
+
   /* Custom button styling */
   .custom-btn {
     background-color: #ff9800;
@@ -30,64 +38,64 @@
   .navbar-nav .nav-link:hover {
     color: #ff9800 !important;
   }
+</style>
 
- </style>
-<section class="">
-    <header>
-  <div class="overlay" style="background-color: rgba(0, 0, 0, 0.6); width: 100%;">
-    <nav class="navbar navbar-expand-lg navbar-dark px-3">
-      <div class="container-fluid">
-        <!-- Logo -->
-        <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
-          <img src="{% static 'images/classiceleicon.png' %}" alt="Classic Electricals Logo" class="img-fluid me-2" style="height: 50px; filter: brightness(1.5);" />
-        </a>
 
-        <!-- Toggler for mobile -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu"
-          aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+<!-- FIXED NAVBAR OVER HEADER IMAGE -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top px-3">
+  <div class="container-fluid">
 
-        <!-- Navbar Links -->
-        <div class="collapse navbar-collapse justify-content-end" id="navbarMenu">
-          <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
-            <li class="nav-item me-3">
-              <a class="nav-link fw-bold text-white" href="{% url 'index' %}"><i class="bi bi-house-door"></i> Home</a>
-            </li>
-            <li class="nav-item me-3">
-              <a class="nav-link fw-bold text-white" href="{% url 'product' %}"><i class="bi bi-bag-check"></i> Products</a>
-            </li>
-            <!-- <li class="nav-item dropdown me-3">
-              <a class="nav-link  fw-bold text-white" href="{% url 'product' %}" id="productsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Products
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="productsDropdown">
-                <li><a class="dropdown-item" href="{% url 'product' %}">All Types</a></li>
-                <li><a class="dropdown-item" href="">Underwater Inspection Cameras</a></li>
-                <li><a class="dropdown-item" href="">Gas Detectors</a></li>
-                <li><a class="dropdown-item" href="">Video Borescopes</a></li>
-                <li><a class="dropdown-item" href="">Machine Vision Cameras</a></li>
-              </ul>
-            </li> -->
+    <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+      <img src="{% static 'images/classiceleicon.png' %}"
+           alt="Classic Electricals Logo"
+           class="img-fluid me-2"
+           style="height: 50px; filter: brightness(1.5);" />
+    </a>
 
-            <li class="nav-item me-3">
-              <a class="nav-link fw-bold text-white" href="{% url 'about' %}"><i class="bi bi-info-circle"></i> About Us</a>
-            </li>
-            <li class="nav-item me-3">
-              <a class="nav-link fw-bold text-white" href="{% url 'contact' %}"><i class="bi bi-person-vcard"></i> Contact Us</a>
-            </li>
-            <li class="nav-item me-3">
-              <a class="btn custom-btn rounded-pill px-3" href="{% url 'requestq' %}">Request a Quote</a>
-            </li>
-            <!-- <li class="nav-item">
-              <a class="btn btn-outline-light rounded-pill px-3" href="{% url 'adminlogin' %}">Admin Login</a>
-            </li> -->
-          </ul>
-        </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarMenu" aria-expanded="false">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      </div>
-    </nav>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarMenu">
+      <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
+
+        <li class="nav-item me-3">
+          <a class="nav-link fw-bold text-white" href="{% url 'index' %}">
+            <i class="bi bi-house-door"></i> Home
+          </a>
+        </li>
+
+        <li class="nav-item me-3">
+          <a class="nav-link fw-bold text-white" href="{% url 'product' %}">
+            <i class="bi bi-bag-check"></i> Products
+          </a>
+        </li>
+
+        <li class="nav-item me-3">
+          <a class="nav-link fw-bold text-white" href="{% url 'about' %}">
+            <i class="bi bi-info-circle"></i> About Us
+          </a>
+        </li>
+
+        <li class="nav-item me-3">
+          <a class="nav-link fw-bold text-white" href="{% url 'contact' %}">
+            <i class="bi bi-person-vcard"></i> Contact Us
+          </a>
+        </li>
+
+        <li class="nav-item me-3">
+          <a class="btn custom-btn rounded-pill px-3" href="{% url 'requestq' %}">
+            Request a Quote
+          </a>
+        </li>
+
+      </ul>
+    </div>
+
   </div>
-</header>
+</nav>
 
-</section>
+
+<!-- HEADER BACKGROUND IMAGE BELOW NAVBAR -->
+<header></header>

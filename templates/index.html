@@ -14,10 +14,7 @@
  
 
   {% include 'includes/header.html' %}
-    <section>
-    <!-- Include header -->
-  <!-- <div id="header-placeholder"></div> -->
-  </section>
+    
 </header>
 <body id="index">
 
@@ -29,7 +26,7 @@
     <div class="col-12 col-md-8 mb-4 mb-md-0">
       <h2 class="fw-bold text-primary">Classic Electricals</h2>
       <p class="fs-6 mt-3">
-        <strong>Classic Electricals</strong> is a certified and trusted manufacturer and supplier of industrial-grade electrical instruments and advanced inspection equipment. With years of experience, we have built a strong reputation for delivering high-performance solutions to both B2B and B2C clients across India.
+         Is a certified and trusted manufacturer and supplier of industrial-grade electrical instruments and advanced inspection equipment. With years of experience, we have built a strong reputation for delivering high-performance solutions to both B2B and B2C clients across India.
       </p>
       <p class="fs-6 mt-3">
         Our product line includes state-of-the-art <strong>Underwater Inspection Cameras</strong>, <strong>Gas Detectors</strong>, <strong>Video Borescopes</strong>, and <strong>Machine Vision Cameras</strong>. These solutions are designed to meet the stringent demands of industrial safety, monitoring, and inspection.
@@ -55,18 +52,17 @@
 
 
 <!-- Fixed Background Section -->
-<section class="container-fluid middle text-white d-flex align-items-center justify-content-center mt-5 mb-5">
-  <div class="container">
+<section class="container-fluid middle text-white d-flex align-items-center justify-content-center mt-5 mb-0">
+  <div class="container mt-5">
     <div class="row">
-      <div class="col-2"></div>
-
-      <div class="col-6">
-        <div>
+      <!-- <div class="col-2"></div> -->
+       <div>
           <h5>Our Products</h5>
           <p class="fs-2">Explore our advanced range of industrial safety, inspection, and measurement devices tailored to diverse industrial needs.</p>
         </div>
         <hr class="border my-1 mb-4" />
 
+      <div class="col-6">
         <div>
           <h5>Portable Type Gas Detector</h5>
           <p>Compact and accurate gas detection device ideal for on-the-go safety inspections in industrial environments.</p>
@@ -92,16 +88,19 @@
         <hr class="border my-1 mb-4" />
 
         <div>
+          <h3 class="fs-2">The only place where you’ll get the perfect solution for all your industry needs.</h3>
+        <!-- <a class="btn custom-btn rounded-pill px-3 mt-5" href="{% url 'about' %}">Learn More</a> -->
+        </div>
+        <!-- <hr class="border my-1 mb-4" /> -->
+
+      </div>
+
+      <div class="col-6 text-start">
+         <div>
           <h5>Fixed Type Gas Detector</h5>
           <p>Stationary gas detection system ideal for continuous monitoring of hazardous gases in industrial zones.</p>
         </div>
         <hr class="border my-1 mb-4" />
-
-        <!-- <div>
-          <h5>Alcohol Breath Analyzer</h5>
-          <p>Efficient breath analysis tool used in industrial safety and law enforcement for BAC monitoring.</p>
-        </div>
-        <hr class="border my-1 mb-4" /> -->
 
         <div>
           <h5>Industrial Machine Vision Camera</h5>
@@ -113,11 +112,7 @@
           <h5>Mini Pipe Inspection Camera</h5>
           <p>Compact camera system designed for visual inspection of small pipelines, drains, and borewells.</p>
         </div>
-      </div>
 
-      <div class="col-4 text-start mt-5">
-        <h3 class="fs-2">The only place where you’ll get the perfect solution for all your industry needs.</h3>
-        <a class="btn custom-btn rounded-pill px-3 mt-5" href="{% url 'about' %}">Learn More</a>
       </div>
     </div>
   </div>
@@ -150,9 +145,9 @@
         <div class="col-lg-8">
             <h4 class="fw-bold text-black">Need Help with Easier Industrial Solutions? We Are Experts!</h4 class="fw-bold text-black">
         </div>
-        <div class="col-lg-4">
+        <!-- <div class="col-lg-4">
             <a class="btn custom-btn rounded-pill px-3" href="{% url 'about' %}">Learn More</a>
-        </div>
+        </div> -->
       </div>
  </div>
 </section>

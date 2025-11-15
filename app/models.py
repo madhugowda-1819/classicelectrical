@@ -24,7 +24,6 @@ class Products(models.Model):
     pname=models.CharField(max_length=191)
     pctid=models.ForeignKey(ProductCategory, on_delete=models.CASCADE, related_name='products')
     pdesc=models.CharField(max_length=191)
-    pprice=models.DecimalField(max_digits=10, decimal_places=2)
     pimage=models.ImageField(upload_to='media/products/', blank=True, null=True)
     pcreated=models.DateField(auto_now_add=True)
 

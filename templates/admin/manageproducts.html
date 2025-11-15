@@ -26,7 +26,6 @@
                         <th>Product ID</th>
                         <th>Product Name</th>
                         <th>Product Category</th>
-                        <th>Product Price</th>
                         <th>Product Image</th>
                         <th>Edit</th>
                         <th>Delete</th>
@@ -39,7 +38,6 @@
                         <td>{{ pdo.pid }}</td>
                         <td>{{ pdo.pname }}</td>
                         <td>{{ pdo.pctid.pctname }}</td>
-                        <td>{{ pdo.pprice }}</td>
                         <td>
                             {% if pdo.pimage %}
                                 <img src="{{ pdo.pimage.url }}" alt="" class="img-fluid rounded" style="max-width:50px; max-height:50px;">
