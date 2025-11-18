@@ -47,14 +47,25 @@
           <div class="row g-3 mb-3">
             <label for="editor1" class="col-12 col-md-2 col-form-label fw-bold">Vision:</label>
             <div class="col-12 col-md-10">
-              <textarea class="form-control" name="Vission" rows="3">{{ about.c_vision }}</textarea>
+              <textarea name="Vission" id="vission">{{ about.c_vision }}</textarea>
             </div>
+             <!-- CKEditor CDN -->
+            <script src="/static/ckeditor/ckeditor.js"></script>
+            <script>
+                CKEDITOR.replace('vission');
+            </script>
+            
           </div>
           <div class="row g-3 mb-3">
             <label for="Mission" class="col-12 col-md-2 col-form-label fw-bold">Mission:</label>
             <div class="col-12 col-md-10">
-              <textarea class="form-control" name="Mission" rows="3">{{ about.c_mission }}</textarea>
+              <textarea name="Mission" id="mission">{{ about.c_mission }}</textarea>
             </div>
+             <!-- CKEditor CDN -->
+            <script src="/static/ckeditor/ckeditor.js"></script>
+            <script>
+                CKEDITOR.replace('mission');
+            </script>
           </div>
           <div class="d-flex justify-content-center mt-2">
             <button type="submit" name="save_about" class="btn btn-primary">
@@ -72,8 +83,13 @@
           <div class="row g-3 mb-3">
             <label for="editor2" class="col-12 col-md-2 col-form-label fw-bold">Address:</label>
             <div class="col-12 col-md-10">
-              <textarea class="form-control" name="address" rows="3">{{ contact.c_address }}</textarea>
+              <textarea name="product_description" id="address">{{ contact.c_address }}</textarea>
             </div>
+             <!-- CKEditor CDN -->
+            <script src="/static/ckeditor/ckeditor.js"></script>
+            <script>
+                CKEDITOR.replace('address');
+            </script>
           </div>
           <div class="row g-3 mb-3">
             <label for="email" class="col-12 col-md-2 col-form-label fw-bold">Email:</label>
@@ -88,6 +104,7 @@
               <input type="text" class="form-control" id="phone" name="phone"
                      value="{{ contact.c_phone }}" placeholder="Enter phone number">
             </div>
+            
           </div>
           <div class="d-flex justify-content-center mt-2">
             <button type="submit" name="save_contact" class="btn btn-primary">
@@ -99,4 +116,5 @@
     </div>
   </div>
 </section>
+
 {% endblock %}
