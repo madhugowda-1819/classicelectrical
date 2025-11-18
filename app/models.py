@@ -1,6 +1,5 @@
 from django.db import models
-
-# Create your models here.
+from ckeditor.fields import RichTextField# Create your models here.
 
 class WebsiteAdmin(models.Model):
     username = models.CharField(max_length=191, unique=True)
@@ -23,7 +22,7 @@ class Products(models.Model):
     pid=models.IntegerField(primary_key=True)
     pname=models.CharField(max_length=191)
     pctid=models.ForeignKey(ProductCategory, on_delete=models.CASCADE, related_name='products')
-    pdesc=models.TextField()
+    pdesc=RichTextField()
     pimage=models.ImageField(upload_to='media/products/', blank=True, null=True)
     pcreated=models.DateField(auto_now_add=True)
 

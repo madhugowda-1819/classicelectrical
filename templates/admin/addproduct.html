@@ -75,31 +75,13 @@
                     Product Description:<span class="text-danger">*</span>
                 </label>
             
-                <textarea name="product_description" id="product_description"
-                          class="form-control" rows="5" placeholder="Enter Product Description"
-                          required></textarea>
+                <textarea name="product_description" id="id_description"></textarea>
+
             </div>
             <!-- CKEditor CDN -->
-<script src="https://cdn.ckeditor.com/4.24.0-lts/standard/ckeditor.js"></script>
+<script src="/static/ckeditor/ckeditor.js"></script>
 <script>
-    CKEDITOR.replace('product_description', {
-        height: 300,
-
-        // FULL TOOLBAR (Word-like)
-        toolbar: [
-            { name: 'clipboard', items: ['Undo', 'Redo'] },
-            { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
-            { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat'] },
-            { name: 'colors', items: ['TextColor', 'BGColor'] },
-            { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight'] },
-            { name: 'links', items: ['Link', 'Unlink'] },
-            { name: 'insert', items: ['Table'] },
-            { name: 'tools', items: ['Maximize'] }  // Fullscreen editor
-        ],
-
-        // REMOVE IMAGE UPLOAD FEATURES
-        removePlugins: 'image,uploadimage,uploadfile,filebrowser'
-    });
+    CKEDITOR.replace('id_description');
 </script>
 
         </div>
