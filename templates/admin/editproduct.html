@@ -54,8 +54,8 @@
             </div>
 
             <div class="mb-3">
-                <label for="product_image" class="form-label">Main Product Image:<span class="text-danger">*</span></label>
-                <input type="file" name="product_image" id="product_image" class="form-control" required>
+                <label for="product_image" class="form-label">Main Product Image:</label>
+                <input type="file" name="product_image" id="product_image" class="form-control" >
                 {% if PDO.pimage %}
                     <div class="mt-2">
                         <img src="{{ PDO.pimage.url }}" alt="Current Main Image"
@@ -65,8 +65,8 @@
             </div>
 
             <div class="mb-3">
-                <label for="extra_images" class="form-label">Extra Images (upload more):<span class="text-danger">*</span></label>
-                <input type="file" name="extra_images" id="extra_images" class="form-control" multiple required>
+                <label for="extra_images" class="form-label">Extra Images (upload more):</label>
+                <input type="file" name="extra_images" id="extra_images" class="form-control" multiple >
             </div>
         </div>
 

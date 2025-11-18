@@ -25,6 +25,7 @@ urlpatterns = [
     path('product/', product, name='product'),
     path('product/allcategories/', allcategories, name='allcategories'),
     path('product/category/<int:pid>/<str:pctname>/', category, name='category'),
+    path('product/category/productdetails/<str:pctname>/<int:pid>/<str:pname>/', productdetails, name='productdetails'),
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
     path('contact/send/', contact_email, name='contact_email'),

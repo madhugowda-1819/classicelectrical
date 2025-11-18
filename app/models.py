@@ -30,6 +30,14 @@ class Products(models.Model):
     def __str__(self):
         return self.pname
     
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField(upload_to="media/products/multiple/")
+
+    def __str__(self):
+        return f"{self.product.pname} - Image"
+    
 class ContactInfo(models.Model):
     c_address=models.CharField(max_length=191)
     c_email=models.EmailField(unique=True, max_length=191)
@@ -38,10 +46,3 @@ class ContactInfo(models.Model):
 class AboutInfo(models.Model):
     c_vision=models.CharField(max_length=191)
     c_mission=models.CharField(max_length=191)
-
-class ProductImage(models.Model):
-    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name="images")
-    image = models.ImageField(upload_to="media/products/multiple/")
-
-    def __str__(self):
-        return f"{self.product.pname} - Image"

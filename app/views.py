@@ -20,6 +20,12 @@ def product(request):
     category=ProductCategory.objects.annotate(total_products=Count('products'))
     return render(request, 'products.html',{'category':category})
 
+def productdetails(request, pid, pname, pctname):
+    pcat=ProductCategory.objects.get(pctname=pctname)
+    productdet = Products.objects.get(pid=pid, pname=pname, pctid=pcat)
+    return render(request, 'productdetails.html', {'productdet': productdet})
+
+
 def about(request):
     about_info=AboutInfo.objects.last()
     return render(request, 'about.html', {'about_info':about_info})
@@ -512,26 +518,6 @@ def editproduct(request, pid):
         except ProductCategory.DoesNotExist:
             messages.error(request, 'Invalid Category selected.')
             return redirect('editproduct', pid=pid)
-
-        # 4️⃣ Main image validation
-        if pimage:
-            allowed_ext = ['jpg', 'jpeg', 'png']
-            file_ext = pimage.name.split('.')[-1].lower()
-            if file_ext not in allowed_ext:
-                messages.error(request, 'Invalid Main Image: Only JPG, JPEG, PNG allowed.')
-                return redirect('editproduct', pid=pid)
-        else:
-            messages.error(request, 'Please upload a main product image.')
-            return redirect('editproduct', pid=pid)
-
-
-
-        # 7️⃣ Extra images validation
-        for img in extra_images:
-            ext = img.name.split('.')[-1].lower()
-            if ext not in ['jpg', 'jpeg', 'png']:
-                messages.error(request, f'Invalid Extra Image "{img.name}": Only JPG, JPEG, PNG allowed.')
-                return redirect('editproduct', pid=pid)
 
         try:
             # update product fields
