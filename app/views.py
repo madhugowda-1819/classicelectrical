@@ -296,9 +296,6 @@ def addproductcategory(request):
             messages.error(request, 'Invalid ID: Only digits are allowed.')
             return redirect('addproductcategory')
         
-        if not re.fullmatch(r'[A-Za-z0-9 ]+', pctname or ''):
-            messages.error(request, 'Invalid Name: Only letters, digits, and spaces are allowed.')
-            return redirect('addproductcategory')
         
         if pctimage:
             allowed_extensions = ['jpg', 'jpeg', 'png']
@@ -355,10 +352,6 @@ def editproductcategory(request, pctid):
         pctname = request.POST.get('product_category_name')
         pctimage = request.FILES.get('product_cat_image')
 
-        #validations
-        if not re.fullmatch(r'[A-Za-z0-9 ]+', pctname or ''):
-            messages.error(request, 'Invalid Name: Only letters, digits, and spaces are allowed.')
-            return redirect('editproductcategory', pctid=pctid)
         
         if pctimage:
             allowed_extensions = ['jpg', 'jpeg', 'png']
@@ -419,10 +412,6 @@ def addproducts(request):
             messages.error(request, 'Invalid Product ID: Only digits are allowed.')
             return redirect('addproducts')
 
-        # 2️⃣ Product Name - only letters, numbers, and spaces
-        if not re.fullmatch(r'[A-Za-z0-9 ]+', pname or ''):
-            messages.error(request, 'Invalid Product Name: Only letters, digits, and spaces are allowed.')
-            return redirect('addproducts')
 
         # 3️⃣ Category validation (must exist)
         try:
@@ -442,11 +431,6 @@ def addproducts(request):
             messages.error(request, 'Please upload a main product image.')
             return redirect('addproducts')
 
-
-        # 6️⃣ Description - must not be empty and max 500 chars (you can adjust)
-        if not pdesc or len(pdesc.strip()) < 5:
-            messages.error(request, 'Invalid Description: Minimum 5 characters required.')
-            return redirect('addproducts')
 
         # 7️⃣ Extra images validation
         for img in extra_images:
@@ -521,10 +505,6 @@ def editproduct(request, pid):
         extra_images = request.FILES.getlist('extra_images')  
 
         # -------- VALIDATIONS --------
-        # 2️⃣ Product Name - only letters, numbers, and spaces
-        if not re.fullmatch(r'[A-Za-z0-9 ]+', pname or ''):
-            messages.error(request, 'Invalid Product Name: Only letters, digits, and spaces are allowed.')
-            return redirect('editproduct', pid=pid)
 
         # 3️⃣ Category validation (must exist)
         try:
@@ -545,10 +525,6 @@ def editproduct(request, pid):
             return redirect('editproduct', pid=pid)
 
 
-        # 6️⃣ Description - must not be empty and max 500 chars (you can adjust)
-        if not pdesc or len(pdesc.strip()) < 5:
-            messages.error(request, 'Invalid Description: Minimum 5 characters required.')
-            return redirect('editproduct', pid=pid)
 
         # 7️⃣ Extra images validation
         for img in extra_images:

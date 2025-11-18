@@ -5,19 +5,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% block title %}{% endblock %}
+  <link rel="shortcut icon" href="{% static 'images/companylogo.png' %}" type="image/x-icon">
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+  <!-- FIXED NAV + FIXED SIDEBAR + MAIN SCROLL -->
+  <style>
+    body {
+      overflow: hidden; /* Prevent full page scroll */
+    }
+
+    /* FIX NAVBAR */
+    nav.navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1030;
+    }
+
+    /* FIX SIDEBAR (DESKTOP) */
+    .sidebar-fixed {
+      position: fixed;
+      top: 56px; /* Navbar height */
+      bottom: 0;
+      left: 0;
+      width: 250px;
+      overflow-y: auto;
+      background-color: #5a5a5a;
+      padding: 10px;
+    }
+
+    /* MAIN CONTENT SCROLL */
+    .content-area {
+      margin-top: 56px; /* navbar height */
+      margin-left: 250px; /* sidebar width */
+      height: calc(100vh - 56px);
+      overflow-y: auto; /* Only main content scrolls */
+      background-color: #f8f9fa;
+    }
+
+    /* Mobile only: sidebar not fixed */
+    @media(max-width: 991px) {
+      .content-area {
+        margin-left: 0;
+      }
+    }
+  </style>
 </head>
-<body class="overflow-lg-hidden"><!-- no body scroll -->
+
+<body>
 
 <!-- TOP NAVBAR -->
 <nav class="navbar navbar-dark px-3 py-2 d-flex justify-content-between align-items-center flex-wrap"
      style="background-color: black;">
 
   <div class="d-flex align-items-center">
-    <!-- Offcanvas toggle -->
     <button class="btn btn-outline-light d-lg-none me-2" type="button"
-            data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
+            data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas">
       <i class="bi bi-list"></i>
     </button>
     <span class="navbar-brand fw-bold mb-0">Classic Electricals Admin Page</span>
@@ -26,7 +72,7 @@
   {% if admin %}
   <div class="dropdown mt-2 mt-lg-0">
     <a class="dropdown-toggle text-decoration-none text-white fw-bold" href="#" id="profileDropdown"
-       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+       role="button" data-bs-toggle="dropdown">
       <i class="bi bi-person-circle"></i> Welcome, {{ admin.username }}
     </a>
     <ul class="dropdown-menu dropdown-menu-end">
@@ -41,98 +87,134 @@
 </nav>
 
 
-<div class="container-fluid">
-  <div class="row flex-nowrap">
-    <!-- DESKTOP SIDEBAR (visible lg and up) -->
-    <div class="col-auto d-none d-lg-flex flex-column  p-2 text-white"
-         style="width:250px;background-color: #5a5a5a;">
-      <ul class="nav nav-pills flex-column mb-auto fw-bold">
-        <li class="nav-item">
-          <a href="{% url 'admin_dashboard' %}" class="nav-link text-white"><i class="bi bi-speedometer2"></i> Dashboard</a>
-        </li>
-        <li>
-          <a class="nav-link text-white" data-bs-toggle="collapse" href="#productCategoryMenu" role="button">
-            <i class="bi bi-diagram-3"></i> Products Categories
-          </a>
-          <div class="collapse ms-3" id="productCategoryMenu">
-            <ul class="nav flex-column">
-              <li><a class="nav-link text-white" href="{% url 'addproductcategory' %}"><i class="bi bi-plus-lg"></i> Add Product Category</a></li>
-              <li><a class="nav-link text-white" href="{% url 'manageproductcategory' %}"><i class="bi bi-kanban"></i> Manage Product Category</a></li>
-            </ul>
-          </div>
-        </li>
+<!-- SIDEBAR (DESKTOP) -->
+<div class="sidebar-fixed d-none d-lg-flex flex-column text-white">
+  <ul class="nav nav-pills flex-column mb-auto fw-bold">
 
-        <li>
-          <a class="nav-link text-white" data-bs-toggle="collapse" href="#productMenu" role="button">
-            <i class="bi bi-bag-check"></i> Products
-          </a>
-          <div class="collapse ms-3" id="productMenu">
-            <ul class="nav flex-column">
-              <li><a class="nav-link text-white" href="{% url 'addproducts' %}"><i class="bi bi-plus-lg"></i> Add Products</a></li>
-              <li><a class="nav-link text-white" href="{% url 'manageproducts' %}"><i class="bi bi-kanban"></i> Manage Products</a></li>
-            </ul>
-          </div>
-        </li>
+    <li class="nav-item">
+      <a href="{% url 'admin_dashboard' %}" class="nav-link text-white">
+        <i class="bi bi-speedometer2"></i> Dashboard
+      </a>
+    </li>
 
-        <li class="nav-item">
-          <a href="{% url 'page' %}" class="nav-link text-white"><i class="bi bi-pencil-square"></i> Page Settings</a>
-        </li>
-      </ul>
-    </div>
-
-    <!-- MOBILE SIDEBAR (offcanvas) -->
-    <div class="offcanvas offcanvas-start text-white" tabindex="-1" id="sidebarOffcanvas"
-         style="width:250px;background:linear-gradient(45deg,rgb(39,211,238),red);">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Menu</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body p-2">
-        <ul class="nav nav-pills flex-column mb-auto fw-bold">
-          <li class="nav-item">
-            <a href="{% url 'admin_dashboard' %}" class="nav-link text-white"><i class="bi bi-speedometer2"></i> Dashboard</a>
+    <li>
+      <a class="nav-link text-white" data-bs-toggle="collapse" data-bs-target="#productCategoryMenu">
+        <i class="bi bi-diagram-3"></i> Products Categories
+      </a>
+      <div class="collapse ms-3 
+          {% if '/addproductcategory' in request.path or '/manageproductcategory' in request.path %}show{% endif %}"
+           id="productCategoryMenu">
+        <ul class="nav flex-column">
+          <li>
+            <a class="nav-link text-white {% if '/addproductcategory' in request.path %}active{% endif %}"
+               href="{% url 'addproductcategory' %}">
+              <i class="bi bi-plus-lg"></i> Add Product Category
+            </a>
           </li>
           <li>
-            <a class="nav-link text-white" data-bs-toggle="collapse" href="#productCategoryMenuMobile" role="button">
-              <i class="bi bi-diagram-3"></i> Products Categories
+            <a class="nav-link text-white {% if '/manageproductcategory' in request.path %}active{% endif %}"
+               href="{% url 'manageproductcategory' %}">
+              <i class="bi bi-kanban"></i> Manage Product Category
             </a>
-            <div class="collapse ms-3" id="productCategoryMenuMobile">
-              <ul class="nav flex-column">
-                <li><a class="nav-link text-white" href="{% url 'addproductcategory' %}"><i class="bi bi-plus-lg"></i> Add Product Category</a></li>
-                <li><a class="nav-link text-white" href="{% url 'manageproductcategory' %}"><i class="bi bi-kanban"></i> Manage Product Category</a></li>
-              </ul>
-            </div>
-          </li>
-
-          <li>
-            <a class="nav-link text-white" data-bs-toggle="collapse" href="#productMenuMobile" role="button">
-              <i class="bi bi-bag-check"></i> Products
-            </a>
-            <div class="collapse ms-3" id="productMenuMobile">
-              <ul class="nav flex-column">
-                <li><a class="nav-link text-white" href="{% url 'addproducts' %}"><i class="bi bi-plus-lg"></i> Add Products</a></li>
-                <li><a class="nav-link text-white" href="{% url 'manageproducts' %}"><i class="bi bi-kanban"></i> Manage Products</a></li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="nav-item">
-            <a href="{% url 'page' %}" class="nav-link text-white"><i class="bi bi-pencil-square"></i> Page Settings</a>
           </li>
         </ul>
       </div>
-    </div>
+    </li>
 
-    <!-- MAIN CONTENT -->
-    <main class="col px-0 d-flex flex-column vh-100 ">
-      <div class="flex-grow-1 overflow-auto p-4 bg-light">
-        {% block body_block %}
-        
-        {% endblock %}
+    <li>
+      <a class="nav-link text-white" data-bs-toggle="collapse" data-bs-target="#productMenu">
+        <i class="bi bi-bag-check"></i> Products
+      </a>
+
+      <div class="collapse ms-3 
+          {% if '/addproducts' in request.path or '/manageproducts' in request.path %}show{% endif %}"
+           id="productMenu">
+        <ul class="nav flex-column">
+          <li>
+            <a class="nav-link text-white {% if '/addproducts' in request.path %}active{% endif %}"
+               href="{% url 'addproducts' %}">
+              <i class="bi bi-plus-lg"></i> Add Products
+            </a>
+          </li>
+          <li>
+            <a class="nav-link text-white {% if '/manageproducts' in request.path %}active{% endif %}"
+               href="{% url 'manageproducts' %}">
+              <i class="bi bi-kanban"></i> Manage Products
+            </a>
+          </li>
+        </ul>
       </div>
-    </main>
+    </li>
+
+    <li class="nav-item">
+      <a href="{% url 'page' %}" class="nav-link text-white">
+        <i class="bi bi-pencil-square"></i> Page Settings
+      </a>
+    </li>
+
+  </ul>
+</div>
+
+
+<!-- MOBILE SIDEBAR (OFFCANVAS) -->
+<div class="offcanvas offcanvas-start text-white" tabindex="-1" id="sidebarOffcanvas"
+     style="width:250px;background-color: #5a5a5a;">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Menu</h5>
+    <button class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body p-2">
+    <ul class="nav nav-pills flex-column mb-auto fw-bold">
+      <li class="nav-item">
+        <a href="{% url 'admin_dashboard' %}" class="nav-link text-white">
+          <i class="bi bi-speedometer2"></i> Dashboard
+        </a>
+      </li>
+
+      <li>
+        <a class="nav-link text-white" data-bs-toggle="collapse" href="#productCategoryMenuMobile">
+          <i class="bi bi-diagram-3"></i> Products Categories
+        </a>
+        <div class="collapse ms-3" id="productCategoryMenuMobile">
+          <ul class="nav flex-column">
+            <li><a class="nav-link text-white" href="{% url 'addproductcategory' %}">
+              <i class="bi bi-plus-lg"></i> Add Product Category</a></li>
+            <li><a class="nav-link text-white" href="{% url 'manageproductcategory' %}">
+              <i class="bi bi-kanban"></i> Manage Product Category</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li>
+        <a class="nav-link text-white" data-bs-toggle="collapse" href="#productMenuMobile">
+          <i class="bi bi-bag-check"></i> Products
+        </a>
+        <div class="collapse ms-3" id="productMenuMobile">
+          <ul class="nav flex-column">
+            <li><a class="nav-link text-white" href="{% url 'addproducts' %}">
+              <i class="bi bi-plus-lg"></i> Add Products</a></li>
+            <li><a class="nav-link text-white" href="{% url 'manageproducts' %}">
+              <i class="bi bi-kanban"></i> Manage Products</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a href="{% url 'page' %}" class="nav-link text-white">
+          <i class="bi bi-pencil-square"></i> Page Settings
+        </a>
+      </li>
+    </ul>
   </div>
 </div>
+
+<!-- MAIN CONTENT -->
+<main class="content-area px-0">
+  <div class="p-4">
+    {% block body_block %}
+    {% endblock %}
+  </div>
+</main>
 
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>

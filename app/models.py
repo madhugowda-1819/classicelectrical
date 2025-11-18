@@ -23,7 +23,7 @@ class Products(models.Model):
     pid=models.IntegerField(primary_key=True)
     pname=models.CharField(max_length=191)
     pctid=models.ForeignKey(ProductCategory, on_delete=models.CASCADE, related_name='products')
-    pdesc=models.CharField(max_length=191)
+    pdesc=models.TextField()
     pimage=models.ImageField(upload_to='media/products/', blank=True, null=True)
     pcreated=models.DateField(auto_now_add=True)
 
