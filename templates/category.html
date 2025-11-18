@@ -26,53 +26,38 @@
       <p class="text-muted">Find products designed for industrial safety and precision inspection</p>
     </div>
 
-    <div class="row g-4">
+    <div class="row g-3">
 
-      {% for product in PO %}
-      <div class="col-12 col-md-6 col-lg-6 mb-4">
+  {% for product in PO %}
+  <div class="col-6 col-md-4 col-lg-3 mb-3">
 
-        <div class="card border-2 shadow-sm h-100 p-3">
+    <div class="card border-1 shadow-sm h-100 p-2 text-center">
 
-          <div class="row g-3 align-items-center flex-column flex-md-row">
+      <!-- Product Image -->
+      <a href="{% url 'productdetails' pcategory.pctname product.pid product.pname %}">
+        <img id="mainImage-{{ product.id }}"
+            src="{{ product.pimage.url }}"
+            class="img-fluid border rounded bg-light"
+            alt="{{ product.pname }}"
+            style="max-height: 150px; object-fit: contain; width: 100%;">
+      </a>
 
-            <!-- Product Image -->
-            <div class="col-12 col-md-5 text-center">
-
-              <a href="{% url 'productdetails' pcategory.pctname product.pid product.pname %}">
-                <img id="mainImage-{{ product.id }}" 
-                    src="{{ product.pimage.url }}" 
-                    class="img-fluid border rounded bg-light"
-                    alt="{{ product.pname }}"
-                    style="max-height: 180px; object-fit: contain; width: 100%;">
-              </a>
-
-            </div>
-
-            <!-- Product Info -->
-            <div class="col-12 col-md-7 mt-3 mt-md-0">
-
-              <h3 class="fw-bold fs-4">
-                <a href="{% url 'productdetails' pcategory.pctname product.pid product.pname %}" 
-                   class="text-dark text-decoration-none">
-                   {{ product.pname }}
-                </a>
-              </h3>
-
-              <h6 class="fw-bold mb-1">Description:</h6>
-              <p class="text-muted small">
-                {{ product.pdesc|truncatewords:20 }}
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-      {% endfor %}
+      <!-- Product Name -->
+      <h6 class="fw-bold mt-2">
+        <a href="{% url 'productdetails' pcategory.pctname product.pid product.pname %}"
+           class="text-dark text-decoration-none small">
+           {{ product.pname }}
+        </a>
+      </h6>
 
     </div>
+
+  </div>
+  {% endfor %}
+
+</div>
+
+
 
   </div>
 </section>

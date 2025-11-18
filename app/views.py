@@ -358,16 +358,6 @@ def editproductcategory(request, pctid):
         pctname = request.POST.get('product_category_name')
         pctimage = request.FILES.get('product_cat_image')
 
-        
-        if pctimage:
-            allowed_extensions = ['jpg', 'jpeg', 'png']
-            file_ext = pctimage.name.split('.')[-1].lower()
-            if file_ext not in allowed_extensions:
-                messages.error(request, 'Invalid Image Format: Only JPG, JPEG, or PNG allowed.')
-                return redirect('editproductcategory', pctid=pctid)
-        else:
-            messages.error(request, 'Please upload an image file.')
-            return redirect('editproductcategory', pctid=pctid)
 
         try:
             category.pctname = pctname

@@ -80,10 +80,37 @@
         
 
             <div class="mb-3">
-                <label for="product_description" class="form-label">Product Description:<span class="text-danger">*</span></label>
-                <textarea name="product_description" id="product_description"
-                          class="form-control" rows="3" required>{{ PDO.pdesc }}</textarea>
+                <label for="product_description" class="form-label">
+                    Product Description: <span class="text-danger">*</span>
+                </label>
+            
+                <textarea name="product_description"
+                          id="product_description"
+                          rows="5"
+                          class="form-control"
+                          required>{{ PDO.pdesc|safe }}</textarea>
             </div>
+
+            <!-- #ckeditor -->
+            <script src="https://cdn.ckeditor.com/ckeditor5/4.24.0-lts/classic/ckeditor.js"></script>
+
+
+            <script>
+                CKEDITOR.replace('product_description', {
+                    removePlugins: 'image,uploadimage,uploadfile',
+                    height: 250,
+                    toolbar: [
+                        { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+                        { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Blockquote'] },
+                        { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
+                        { name: 'colors', items: ['TextColor', 'BGColor'] },
+                        { name: 'insert', items: ['Table'] },
+                        { name: 'document', items: ['Source'] },
+                        { name: 'align', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight'] }
+                    ]
+                });
+            </script>
+
 
             {% if PDO.images.all %}
             <div class="mb-3">

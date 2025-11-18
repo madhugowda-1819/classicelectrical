@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +161,13 @@ SESSION_COOKIE_AGE = 1800  # 30 minutes
 
 # clear the session when the browser is closed
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+#CKEDITOR
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': '100%',
+        'removePlugins': 'image',  # removes image upload button
+    }
+}
