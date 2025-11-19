@@ -7,14 +7,15 @@
       <div class="col-lg-3 col-md-6">
         <h5 class="fw-bold">Products Types</h5>
         <ul class="list-unstyled">
-          <li><a class="text-white text-decoration-none link-hover" href="#">Industrial Borescopes/Endoscopes</a></li>
-          <li><a class="text-white text-decoration-none link-hover" href="#">Industrial Sewer Pipe Inspection Cameras</a></li>
-          <li><a class="text-white text-decoration-none link-hover" href="#">Industrial Inspection Equipments</a></li>
-          <li><a class="text-white text-decoration-none link-hover" href="#">Industrial NDT Instruments</a></li>
-          <li><a class="text-white text-decoration-none link-hover" href="#">Industrial Gas Detectors</a></li>
-          <li><a class="text-white text-decoration-none link-hover" href="#">Industrial Machine Vision Cameras</a></li>
-          <li><a class="text-white text-decoration-none link-hover" href="#">Industrial Borewell Inspection Cameras</a></li>
-          <li><a class="text-white text-decoration-none link-hover" href="{% url 'allcategories' %}">Others</a></li>
+            {% for cat in footer_categories %}
+                <li>
+                    <a class="text-white text-decoration-none link-hover"
+                       href="{% url 'category' cat.pctid cat.pctname|slugify %}">
+                       {{ cat.pctname }}
+                    </a>
+                </li>
+            {% endfor %}
+              
         </ul>
       </div>
 
@@ -24,14 +25,11 @@
           <li><a class="text-white text-decoration-none link-hover" href="#">Enterprise</a></li>
           <li><a class="text-white text-decoration-none link-hover" href="{% url 'contact' %}">Customer Services</a></li>
           <li><a class="text-white text-decoration-none link-hover" href="{% url 'product' %}">Product Analytics</a></li>
-          <!-- <li><a class="text-white text-decoration-none link-hover" href="">Marketing</a></li> -->
-          <!-- <li><a class="text-white text-decoration-none link-hover" href="#"></a></li> -->
           <li><a class="text-white text-decoration-none link-hover" href="#">Professional Services</a></li>
         </ul>
       </div>
 
       <div class="col-lg-3 col-md-6">
-        <!-- <h5 class="fw-bold">Company</h5> -->
         <ul class="list-unstyled">
           <li><a class="text-white text-decoration-none link-hover" href="{% url 'about' %}">About Us</a></li>
           <li><a class="text-white text-decoration-none link-hover" href="{% url 'contact' %}">Contact Us</a></li>
@@ -42,7 +40,6 @@
         <h5 class="fw-bold">Marketing</h5>
         <ul class="list-unstyled">
           <li><a class="text-white text-decoration-none link-hover" href="https://www.indiamart.com/classic-electricals-karnataka/">IndiaMart</a></li>
-          <!-- <li><a class="text-white text-decoration-none link-hover" href="{% url 'contact' %}">Contact Us</a></li> -->
         </ul>
       </div>
       
