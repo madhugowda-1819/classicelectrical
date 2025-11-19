@@ -24,7 +24,7 @@
   <!-- <div id="header-placeholder"></div> -->
   </section>
 </header>
-<body id="product">
+<body>
 
     <!-- <section class="container-fluid py-2 product">
         <h1>Products</h1>
@@ -35,7 +35,7 @@
   <div class="containe bg-cream p-5">
 
     <!-- Title + View All -->
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-center mt-3 mb-5">
       <h3 class="fw-bold m-0">Explore Our Categories</h3>
       <a href="{% url 'allcategories' %}" class="fw-bold text-primary text-decoration-none">
         View All →
@@ -52,18 +52,18 @@
       </button>
 
       <!-- Slider -->
-      <div id="catSlider" class="d-flex overflow-auto flex-row gap-3 px-2"
+      <div id="catSlider" class="d-flex overflow-auto flex-row gap-3 px-3"
            style="scroll-behavior:smooth;">
 
         {% for pcategory in category|slice:':12' %}
         <a href="{% url 'category' pcategory.pctid pcategory.pctname|slugify %}"
            class="text-decoration-none text-dark">
 
-          <div class="card shadow-lg border-2 p-2 text-center"
+          <div class="card shadow-lg border-2 p-3 text-center mb-5"
      style="width: 180px; height: 260px;">
 
           <!-- Square Image -->
-          <div class="d-flex justify-content-center align-items-center mx-auto"
+              <div class="d-flex justify-content-center align-items-center mx-auto"
                style="width: 150px; height: 150px; overflow: hidden;">
 
                   {% if pcategory.pimage %}
@@ -82,7 +82,7 @@
                   <h6 class="fw-bold mb-1" style="font-size: 14px; line-height: 1.2;">
                       {{ pcategory.pctname }}
                   </h6>
-                  <small class="text-muted">{{ pcategory.total_products }} Products</small>
+                  <small class="text-muted">{{ pcategory.total_products }} Products Available</small>
               </div>
             
           </div>
@@ -105,24 +105,7 @@
 
 </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
   {% include 'includes/footer.html' %}
-
-  <section>
-    <!-- Include header -->
-  <!-- <div id="footer-placeholder"></div> -->
-  </section>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
