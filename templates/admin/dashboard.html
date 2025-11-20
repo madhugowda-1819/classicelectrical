@@ -7,56 +7,85 @@
 {% endblock %}
 
 {% block body_block %}
-<section class="container-fluid mt-5 shadow" style="height: 500px;">
-  <div class="container rounded p-3 ">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="">Dashboard</h2> 
-    </div>
-<hr>
-    <div class="row g-3 g-md-4">
 
-      <div class="col-12 col-sm-6 col-md-3">
+<style>
+  /* Tech look card hover */
+  .tech-card {
+      border-radius: 14px;
+      transition: transform .25s ease, box-shadow .25s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  }
+  .tech-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  }
+
+  /* Tech gradient backgrounds */
+  .grad-1 { background: linear-gradient(135deg, #00f260, #0575e6); }
+  .grad-2 { background: linear-gradient(135deg, #8e2de2, #4a00e0); }
+  .grad-3 { background: linear-gradient(135deg, #f7971e, #ffd200); }
+
+  /* Heading style */
+  .dash-title {
+      font-weight: 700;
+      letter-spacing: .5px;
+      color: #333;
+  }
+
+  /* Fix blue gap under navbar */
+  .content-area section {
+      background: transparent !important;
+      padding-top: 10px;
+  }
+</style>
+
+<section class="container-fluid p-3">
+
+  <div class="container bg-white rounded shadow-sm p-4">
+
+    <h2 class="dash-title mb-3">Dashboard</h2>
+    <hr>
+
+    <div class="row g-4 mt-2">
+
+      <!-- Product Categories -->
+      <div class="col-12 col-sm-6 col-md-4">
         <a href="{% url 'manageproductcategory' %}" class="text-decoration-none">
-          <div class="card text-white h-100" style="background:linear-gradient(45deg, rgb(123, 255, 0), rgb(0, 38, 255)); border-radius: 10px;">
+          <div class="card text-white tech-card grad-1 h-100">
             <div class="card-body">
-              <h5 class="card-title" style="font-size: 1rem;"><i class="bi bi-diagram-3"></i> Total Product Categories</h5>
-              <h4 class="fw-bold ms-2">{{totalpcat}}</h4>
+              <h5 class="card-title"><i class="bi bi-diagram-3"></i> Product Categories</h5>
+              <h3 class="fw-bold ms-1">{{ totalpcat }}</h3>
             </div>
           </div>
         </a>
       </div>
 
-      <div class="col-12 col-sm-6 col-md-3">
+      <!-- Products -->
+      <div class="col-12 col-sm-6 col-md-4">
         <a href="{% url 'manageproducts' %}" class="text-decoration-none">
-          <div class="card text-white h-100" style="background:linear-gradient(45deg, rgb(0, 255, 225), rgb(63, 81, 183)); border-radius: 10px;">
+          <div class="card text-white tech-card grad-2 h-100">
             <div class="card-body">
-              <h5 class="card-title" style="font-size: 1rem;"><i class="bi bi-bag-check"></i> Total Products</h5>
-              <h4 class="fw-bold ms-2">{{total}}</h4>
+              <h5 class="card-title"><i class="bi bi-bag-check"></i> Total Products</h5>
+              <h3 class="fw-bold ms-1">{{ total }}</h3>
             </div>
           </div>
         </a>
       </div>
 
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card text-white h-100" style="background:linear-gradient(45deg, rgb(255, 0, 111), rgb(246, 255, 0)); border-radius: 10px;">
+      <!-- Admins -->
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="card text-white tech-card grad-3 h-100">
           <div class="card-body">
-            <h5 class="card-title" style="font-size: 1rem;"><i class="bi bi-person-circle"></i> Total Admins</h5>
-            <h4 class="fw-bold ms-2">{{totala}}</h4>
+            <h5 class="card-title"><i class="bi bi-person-circle"></i> Total Admins</h5>
+            <h3 class="fw-bold ms-1">{{ totala }}</h3>
           </div>
         </div>
       </div>
-
-      <!-- Optional fourth card example
-      <div class="col-12 col-sm-6 col-md-3">
-        <div class="card text-white h-100" style="background:linear-gradient(45deg, rgb(0, 255, 0), rgb(0, 38, 255)); border-radius: 10px;">
-          <div class="card-body">
-            <h5 class="card-title">Revenue</h5>
-          </div>
-        </div>
-      </div> -->
 
     </div>
+
   </div>
+
 </section>
 
 {% endblock %}

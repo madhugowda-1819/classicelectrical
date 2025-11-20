@@ -5,114 +5,152 @@
 {% endblock %}
 
 {% block body_block %}
-<section class="container-fluid mt-4">
-    <div class="container p-3 shadow-lg">
-        <h2 class="text-center">Update Product</h2>
-        <hr>
-        <div>
-            <span class="text-danger fw-bold">*</span> All Fields Are Mandatory 
+
+<style>
+    .card-tech {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.12);
+        border: 1px solid #e3e3e3;
+    }
+
+    .header-line {
+        border-bottom: 2px solid #e0e0e0;
+        margin-bottom: 15px;
+        padding-bottom: 5px;
+    }
+
+    .preview-img {
+        max-width: 110px;
+        border: 1px solid #d1d1d1;
+        border-radius: 8px;
+        padding: 3px;
+        background: #fafafa;
+    }
+</style>
+
+<section class="container-fluid mt-4 mb-5">
+    <div class="container card-tech">
+
+        <div class="header-line text-center">
+            <h3 class="fw-bold m-0">Update Product</h3>
         </div>
-        <br>
+
+        <p class="text-danger fw-bold">* All Fields Are Mandatory</p>
+
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} text-center" id="msg" role="alert">
+                <div class="alert alert-{{ message.tags }} fw-bold text-center" id="msg">
                     {{ message }}
                 </div>
             {% endfor %}
         {% endif %}
 
         <script>
-            // Auto-hide messages after 10 seconds
-            setTimeout(function() {
-                var msg = document.getElementById('msg');
-                if (msg) {
-                    msg.style.display = 'none';
-                }
-            }, 10000);
+            setTimeout(() => {
+                let msg = document.getElementById('msg');
+                if (msg) msg.style.display = "none";
+            }, 6000);
         </script>
 
+        <!-- FORM START -->
         <form class="form" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="row g-3 fw-bold">
-        <div class="col-12 col-md-6">
-            <div class="mb-3">
-                <label for="product_id" class="form-label">Product ID:<span class="text-danger">*</span></label>
-                <input type="number" name="product_id" id="product_id" class="form-control" value="{{ PDO.pid }}" readonly required>
-            </div>
+            {% csrf_token %}
 
-            <div class="mb-3">
-                <label for="product_category" class="form-label">Product Category:<span class="text-danger">*</span></label>
-                <select name="product_category" id="product_category" class="form-select" required>
-                    <option value="">-- Select Category --</option>
-                    {% for pct in PCO %}
-                        <option value="{{ pct.pctid }}"
-                            {% if PDO.pctid.pctid == pct.pctid %}selected{% endif %}>
-                            {{ pct.pctname }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
+            <div class="row g-4 fw-bold">
 
-            <div class="mb-3">
-                <label for="product_image" class="form-label">Main Product Image:</label>
-                <input type="file" name="product_image" id="product_image" class="form-control" >
-                {% if PDO.pimage %}
-                    <div class="mt-2">
-                        <img src="{{ PDO.pimage.url }}" alt="Current Main Image"
-                             class="img-fluid rounded" style="max-width:100px; border:1px solid #ccc;">
+                <!-- LEFT SIDE -->
+                <div class="col-md-6">
+
+                    <div class="mb-3">
+                        <label class="form-label">Product ID <span class="text-danger">*</span></label>
+                        <input type="number"
+                               name="product_id"
+                               class="form-control"
+                               value="{{ PDO.pid }}"
+                               readonly required>
                     </div>
-                {% endif %}
-            </div>
 
-            <div class="mb-3">
-                <label for="extra_images" class="form-label">Extra Images (upload more):</label>
-                <input type="file" name="extra_images" id="extra_images" class="form-control" multiple >
-            </div>
-        </div>
+                    <div class="mb-3">
+                        <label class="form-label">Product Category <span class="text-danger">*</span></label>
+                        <select name="product_category" class="form-select" required>
+                            <option value="">-- Select Category --</option>
+                            {% for pct in PCO %}
+                                <option value="{{ pct.pctid }}"
+                                    {% if PDO.pctid.pctid == pct.pctid %}selected{% endif %}>
+                                    {{ pct.pctname }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-        <div class="col-12 col-md-6">
-            <div class="mb-3">
-                <label for="product_name" class="form-label">Product Name:<span class="text-danger">*</span></label>
-                <input type="text" name="product_name" id="product_name"
-                       class="form-control" value="{{ PDO.pname }}" required>
-            </div>
+                    <div class="mb-3">
+                        <label class="form-label">Main Product Image:</label>
+                        <input type="file" name="product_image" class="form-control">
 
-        
+                        {% if PDO.pimage %}
+                        <img src="{{ PDO.pimage.url }}"
+                             class="preview-img mt-2"
+                             alt="Current Main Image">
+                        {% endif %}
+                    </div>
 
-            <div class="mb-3">
-                <label for="product_description" class="form-label">
-                    Product Description: <span class="text-danger">*</span>
-                </label>
-            
-               <textarea name="product_description" id="id_description">{{ PDO.pdesc|safe }}</textarea>
-            </div>
+                    <div class="mb-3">
+                        <label class="form-label">Extra Images (Upload More):</label>
+                        <input type="file" name="extra_images" class="form-control" multiple>
+                    </div>
 
-             <!-- CKEditor CDN -->
-            <script src="/static/ckeditor/ckeditor.js"></script>
-            <script>
-                CKEDITOR.replace('id_description');
-            </script>
+                </div>
 
+                <!-- RIGHT SIDE -->
+                <div class="col-md-6">
 
-            {% if PDO.images.all %}
-            <div class="mb-3">
-                <label class="form-label">Current Extra Images:<span class="text-danger">*</span></label>
-                <div class="d-flex flex-wrap gap-2">
-                    {% for img in PDO.images.all %}
-                        <img src="{{ img.image.url }}" alt="Extra Image"
-                             class="img-thumbnail" style="width:80px; height:80px; object-fit:cover;" required>
-                    {% endfor %}
+                    <div class="mb-3">
+                        <label class="form-label">Product Name <span class="text-danger">*</span></label>
+                        <input type="text"
+                               name="product_name"
+                               class="form-control"
+                               value="{{ PDO.pname }}"
+                               required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Product Description <span class="text-danger">*</span></label>
+                        <textarea name="product_description" id="id_description">{{ PDO.pdesc|safe }}</textarea>
+                    </div>
+
+                    <!-- CKEditor -->
+                    <script src="/static/ckeditor/ckeditor.js"></script>
+                    <script>
+                        CKEDITOR.replace('id_description');
+                    </script>
+
+                    {% if PDO.images.all %}
+                    <div class="mb-3">
+                        <label class="form-label">Current Extra Images:</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for img in PDO.images.all %}
+                                <img src="{{ img.image.url }}"
+                                     class="img-thumbnail"
+                                     style="width:80px; height:80px; object-fit:cover;">
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
-            {% endif %}
-        </div>
-    </div>
 
-    <div class="mb-3 text-center mt-3">
-        <input type="submit" value="Update" class="btn btn-success">
-    </div>
-</form>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary fw-bold px-5">
+                    Update
+                </button>
+            </div>
+
+        </form>
+        <!-- FORM END -->
 
     </div>
 </section>
+
 {% endblock %}

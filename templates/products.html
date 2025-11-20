@@ -5,53 +5,84 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Classic Electricals | Products Page</title>
-    <link rel="shortcut icon" href="{% static 'images\companylogo.png' %}" type="image/x-icon">
+
+  <link rel="shortcut icon" href="{% static 'images/companylogo.png' %}" type="image/x-icon">
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'js/bootstrap.bundle.min.js' %}" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
   <style>
-     .bg-cream { background-color: #ffffff; }
+    .bg-cream { background-color: #ffffff; }
     .bg-back { background-color: #e9e4e4; }
 
+    /* Tech-look cards */
+    .tech-card {
+        border: 1px solid #d8d8d8;
+        transition: all 0.25s ease-in-out;
+        background: #ffffff;
+        border-radius: 12px;
+    }
+    .tech-card:hover {
+        transform: translateY(-4px);
+        border-color: #0ef;
+        box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.4);
+    }
+
+    /* Slider buttons tech */
+    .slide-btn {
+        border-radius: 50%;
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #0ef !important;
+        color: #0ef !important;
+        background: transparent;
+        transition: 0.3s;
+    }
+    .slide-btn:hover {
+        background: #0ef;
+        color: #000 !important;
+    }
+
+    /* Tech title */
+    .tech-title {
+        border-left: 4px solid #0ef;
+        padding-left: 10px;
+    }
   </style>
+
 </head>
+
 <header>
   {% include 'includes/header.html' %}
-
-    <section>
-    <!-- Include header -->
-  <!-- <div id="header-placeholder"></div> -->
-  </section>
 </header>
-<body>
 
-    <!-- <section class="container-fluid py-2 product">
-        <h1>Products</h1>
-    </section> -->
+<body>
 
 <section class="container-fluid px-5 bg-back">
 
   <div class="containe bg-cream p-5">
 
-    <!-- Title + View All -->
+    <!-- Title -->
     <div class="d-flex justify-content-between align-items-center mt-3 mb-5">
-      <h3 class="fw-bold m-0">Explore Our Categories</h3>
+      <h3 class="fw-bold m-0 tech-title">Explore Our Categories</h3>
       <a href="{% url 'allcategories' %}" class="fw-bold text-primary text-decoration-none">
         View All →
       </a>
     </div>
 
-    <!-- Slider Wrapper -->
+    <!-- Slider -->
     <div class="d-flex justify-content-between align-items-center">
 
-      <!-- LEFT ARROW -->
-      <button class="btn btn-outline-primary px-2"
+      <!-- LEFT -->
+      <button class="btn slide-btn"
               onclick="document.getElementById('catSlider').scrollBy({ left: -250, behavior: 'smooth' })">
-        ‹
+        <i class="bi bi-chevron-left"></i>
       </button>
 
-      <!-- Slider -->
+      <!-- Slider Content -->
       <div id="catSlider" class="d-flex overflow-auto flex-row gap-3 px-3"
            style="scroll-behavior:smooth;">
 
@@ -59,44 +90,42 @@
         <a href="{% url 'category' pcategory.pctid pcategory.pctname|slugify %}"
            class="text-decoration-none text-dark">
 
-          <div class="card shadow-lg border-2 p-3 text-center mb-5"
-     style="width: 200px; height: 300px;">
+          <div class="card tech-card shadow-sm p-3 text-center mb-5"
+               style="width: 200px; height: 300px;">
 
-          <!-- Square Image -->
-              <div class="d-flex justify-content-center align-items-center mx-auto"
-               style="width: 150px; height: 150px; overflow: hidden;">
+            <!-- Image -->
+            <div class="d-flex justify-content-center align-items-center mx-auto"
+                 style="width: 150px; height: 150px; overflow: hidden; border-radius: 10px; border:1px solid #ccc;">
 
-                  {% if pcategory.pimage %}
-                  <img src="{{ pcategory.pimage.url }}"
-                       alt="{{ pcategory.pctname }}"
-                       style="width: 100%; height: 100%; object-fit: cover;">
-                  {% else %}
-                  <img src="" alt="No Image"
-                       style="width: 100%; height: 100%; object-fit: cover;">
-                  {% endif %}
-              
-              </div>
-            
-              <!-- Text -->
-              <div class="mt-2" style="height: 60px; overflow: hidden;">
-                  <h6 class="fw-bold mb-1" style="font-size: 14px; line-height: 1.2;">
-                      {{ pcategory.pctname }}
-                  </h6>
-                  <small class="text-muted">{{ pcategory.total_products }} Products Available</small>
-              </div>
-            
+              {% if pcategory.pimage %}
+              <img src="{{ pcategory.pimage.url }}" alt="{{ pcategory.pctname }}"
+                   style="width: 100%; height: 100%; object-fit: cover;">
+              {% else %}
+              <img src="" alt="No Image"
+                   style="width: 100%; height: 100%; object-fit: cover;">
+              {% endif %}
+
+            </div>
+
+            <!-- Text -->
+            <div class="mt-2" style="height: 60px; overflow: hidden;">
+              <h6 class="fw-bold mb-1" style="font-size: 14px; line-height: 1.2;">
+                {{ pcategory.pctname }}
+              </h6>
+              <small class="text-muted">{{ pcategory.total_products }} Products Available</small>
+            </div>
+
           </div>
-
 
         </a>
         {% endfor %}
 
       </div>
 
-      <!-- RIGHT ARROW -->
-      <button class="btn btn-outline-primary px-2"
+      <!-- RIGHT -->
+      <button class="btn slide-btn"
               onclick="document.getElementById('catSlider').scrollBy({ left: 250, behavior: 'smooth' })">
-        ›
+        <i class="bi bi-chevron-right"></i>
       </button>
 
     </div>
@@ -105,23 +134,11 @@
 
 </section>
 
-  {% include 'includes/footer.html' %}
+{% include 'includes/footer.html' %}
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Load header from external file
-    fetch('includes/header.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('header-placeholder').innerHTML = data);
-      // Load header from external file
-    fetch('includes/footer.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('footer-placeholder').innerHTML = data);
-  </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    {% include 'includes/icons.html' %}
-
+{% include 'includes/icons.html' %}
 
 </body>
 </html>

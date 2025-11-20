@@ -6,92 +6,132 @@
 
 {% block body_block %}
 <section class="container-fluid mt-4">
-    <div class="container p-3 shadow-lg">
-        <h2 class="text-center">Add Products</h2>
+    <div class="container p-4 shadow-lg rounded-4" 
+         style="background:#f8f9fc; border:1px solid #e2e5ec;">
+
+        <h2 class="text-center fw-bold mb-2">Add Products</h2>
         <hr>
-        <div>
-            <span class="text-danger">*</span> All Fields Are Mandatory 
-        </div>
-        <br>
+
+         <p class="text-danger fw-bold mb-3" style="font-size: 0.95rem;">
+            * All Fields Are Mandatory
+        </p>
+
         {% if messages %}
-          {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}" id="msg" role="alert">
-              {{ message }}
-            </div>
-          {% endfor %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" id="msg" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% endif %}
 
         <script>
-          // Auto-hide messages after 10 seconds
-          setTimeout(function() {
-            var msg = document.getElementById('msg');
-            if (msg) {
-              msg.style.display = 'none';
-            }
-          }, 10000);
+            setTimeout(() => {
+                var msg = document.getElementById('msg');
+                if (msg) msg.style.display = 'none';
+            }, 10000);
         </script>
 
-       <form class="form" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
+        <form class="form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
 
-    <div class="row g-3 fw-bold"> <!-- g-3 adds spacing between columns -->
-        <div class="col-12 col-md-6">
-            <div class="mb-3">
-                <label for="product_id" class="form-label">Product ID:<span class="text-danger">*</span></label>
-                <input type="number" name="product_id" id="product_id" class="form-control" placeholder="Enter Product ID" min="1" required>
-            </div>
+            <div class="row g-4 fw-bold">
 
-            <div class="mb-3">
-                <label for="product_category" class="form-label">Product Category:<span class="text-danger">*</span></label>
-                <select name="product_category" id="product_category" class="form-select" required>
-                    <option value="">-- Select Category --</option>
-                    {% for pct in PCO %}
-                        <option value="{{ pct.pctid }}">{{ pct.pctname }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+                <!-- LEFT SIDE -->
+                <div class="col-12 col-md-6">
 
-            <div class="mb-3">
-                <label for="product_image" class="form-label">Main Product Image:<span class="text-danger">*</span></label>
-                <input type="file" name="product_image" id="product_image" class="form-control" required>
-            </div>
+                    <div class="mb-3">
+                        <label for="product_id" class="form-label">Product ID:
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="number" name="product_id" id="product_id" 
+                            class="form-control shadow-sm tech-input" min="1"
+                            placeholder="Enter Product ID">
+                    </div>
 
-            
-        </div>
+                    <div class="mb-3">
+                        <label for="product_category" class="form-label">Product Category:
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select name="product_category" id="product_category" 
+                                class="form-select shadow-sm tech-input">
+                            <option value="">-- Select Category --</option>
+                            {% for pct in PCO %}
+                                <option value="{{ pct.pctid }}">{{ pct.pctname }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-        <div class="col-12 col-md-6">
-            <div class="mb-3">
-                <label for="product_name" class="form-label">Product Name:<span class="text-danger">*</span></label>
-                <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Enter Product Name" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="extra_images" class="form-label">Extra Images (multiple):<span class="text-danger">*</span></label>
-                <input type="file" name="extra_images" id="extra_images" class="form-control" multiple required>
-            </div>
-
-           <div class="mb-3">
-                <label for="product_description" class="form-label">
-                    Product Description:<span class="text-danger">*</span>
-                </label>
-            
-                <textarea name="product_description" id="id_description"></textarea>
-
-            </div>
-            <!-- CKEditor CDN -->
-            <script src="/static/ckeditor/ckeditor.js"></script>
-            <script>
-                CKEDITOR.replace('id_description');
-            </script>
-
-        </div>
-    </div>
-            
-                <div class="mb-3 text-center mt-3">
-                    <input type="submit" value="ADD" class="btn btn-success w-md-auto">
+                    <div class="mb-3">
+                        <label for="product_image" class="form-label">Main Product Image:
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="file" name="product_image" id="product_image" 
+                               class="form-control shadow-sm tech-input">
+                    </div>
                 </div>
-    </form>
 
+                <!-- RIGHT SIDE -->
+                <div class="col-12 col-md-6">
+
+                    <div class="mb-3">
+                        <label for="product_name" class="form-label">Product Name:
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" name="product_name" id="product_name" 
+                               class="form-control shadow-sm tech-input"
+                               placeholder="Enter Product Name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="extra_images" class="form-label">Extra Images (Multiple):
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="file" name="extra_images" id="extra_images" 
+                               class="form-control shadow-sm tech-input" multiple>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="product_description" class="form-label">
+                            Product Description:<span class="text-danger">*</span>
+                        </label>
+                        <textarea name="product_description" id="id_description"></textarea>
+                    </div>
+
+                    <!-- CKEditor -->
+                    <script src="/static/ckeditor/ckeditor.js"></script>
+                    <script>
+                        CKEDITOR.replace('id_description');
+                    </script>
+                </div>
+
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" 
+                        class="btn btn-success px-5 py-2 fw-bold shadow-sm rounded-pill">
+                    ADD
+                </button>
+            </div>
+
+        </form>
     </div>
 </section>
+
+<style>
+    /* Subtle tech-style form fields */
+    .tech-input {
+        border-radius: 10px;
+        border: 1px solid #cfd5e1 !important;
+        transition: 0.25s ease-in-out;
+    }
+    .tech-input:focus {
+        border-color: #4b7bec !important;
+        box-shadow: 0 0 8px rgba(75, 123, 236, 0.4) !important;
+    }
+
+    /* Soft card rounded corners */
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+</style>
 {% endblock %}

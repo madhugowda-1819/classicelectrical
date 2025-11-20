@@ -46,18 +46,14 @@
 <section class="container-fluid bg-back py-0">
   <div class="container bg-cream px-5">
 
-    <!-- Title -->
-    <div class="text-center mb-5 pt-5">
-      <!-- <h2 class="fw-bold text-primary">{{ productdet.pname }} Product Details</h2> -->
-      <!-- <h2 class="text">Product full specifications and images</h2> -->
-    </div>
+    <div class="text-center mb-5 pt-5"></div>
 
     <div class="row gx-5">
 
       <!-- LEFT SIDE -->
       <div class="col-md-5 d-flex">
 
-        <!-- Thumbnails (NO PREVIEW HERE) -->
+        <!-- Thumbnails -->
         <div class="d-flex flex-column me-3 gap-2 overflow-auto" style="max-height: 400px;">
           {% for img in productdet.images.all %}
             <img src="{{ img.image.url }}"
@@ -67,7 +63,7 @@
           {% endfor %}
         </div>
 
-        <!-- Main Image (ONLY THIS OPENS PREVIEW) -->
+        <!-- Main Image -->
         <div class="flex-grow-1">
           <img id="mainImage-{{ productdet.id }}"
                src="{{ productdet.pimage.url }}"
@@ -78,22 +74,30 @@
 
       </div>
 
-      <!-- RIGHT SIDE: SCROLL ONLY -->
-      <div class="col-md-7 overflow-auto" style="max-height: 450px;">
+      <!-- RIGHT SIDE -->
+      <div class="col-md-7">
 
-        <h3 class="fw-bold mb-2">{{ productdet.pname }}</h3>
+        <!-- FIXED HEADER -->
+        <div class="position-sticky top-0 bg-cream pb-3 pt-2" style="z-index: 10;">
+          <h3 class="fw-bold mb-1">{{ productdet.pname }}</h3>
 
-        <p class="text-muted">
-          Category: <strong>{{ productdet.pctid.pctname }}</strong>
-        </p>
+          <p class="text-muted mb-1">
+            Category: <strong>{{ productdet.pctid.pctname }}</strong>
+          </p>
 
-        <hr>
+          <hr class="mt-2">
+        </div>
 
-        <h5 class="fw-bold mb-1">Product Details:</h5>
+        <!-- SCROLL AREA -->
+        <div class="overflow-auto" style="max-height: 390px; padding-right: 10px;">
 
-        <p class="text-secondary ms-2" style="white-space: pre-line; line-height: 1.7;">
-          {{ productdet.pdesc|safe }}
-        </p>
+          <h5 class="fw-bold">Product Specifications:</h5>
+
+          <p class="text-secondary ms-2" style="white-space: pre-line; line-height: 1.7;">
+            {{ productdet.pdesc|safe }}
+          </p>
+
+        </div>
 
       </div>
 
@@ -103,7 +107,7 @@
   </div>
 </section>
 
-<!-- FULLSCREEN PREVIEW -->
+<!-- IMAGE PREVIEW -->
 <div id="imgPreviewOverlay" onclick="closePreview()">
     <img id="previewImage" src="">
 </div>
@@ -112,24 +116,20 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-// change main image
 function changeImage(productId, thumbnail) {
     const mainImage = document.getElementById("mainImage-" + productId);
     if (mainImage) mainImage.src = thumbnail.src;
 }
 
-// open preview for MAIN image only
 function openPreview(src) {
     document.getElementById("previewImage").src = src;
     document.getElementById("imgPreviewOverlay").style.display = "flex";
 }
 
-// close preview
 function closePreview() {
     document.getElementById("imgPreviewOverlay").style.display = "none";
 }
 
-// ESC close
 document.addEventListener("keydown", function(event) {
     if (event.key === "Escape") closePreview();
 });

@@ -11,73 +11,108 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
 
-
-  <!-- FIXED NAV + FIXED SIDEBAR + MAIN SCROLL -->
   <style>
+    
     body {
-      overflow: hidden; /* Prevent full page scroll */
+      background: #0a0f24;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
     }
 
-    /* FIX NAVBAR */
+    /* NAVBAR */
     nav.navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1030;
+      backdrop-filter: blur(8px);
+      background: rgba(0,0,0,0.75) !important;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 1000;
     }
 
-    /* FIX SIDEBAR (DESKTOP) */
+    /* SIDEBAR */
     .sidebar-fixed {
       position: fixed;
-      top: 56px; /* Navbar height */
+      top: 56px;
       bottom: 0;
       left: 0;
       width: 250px;
       overflow-y: auto;
-      background-color: #5a5a5a;
-      padding: 10px;
+      background: rgba(20,20,20,0.70);
+      backdrop-filter: blur(6px);
+      border-right: 1px solid rgba(255,255,255,0.08);
+      padding: 12px;
     }
 
-    /* MAIN CONTENT SCROLL */
+    .sidebar-fixed .nav-link {
+      border-radius: 8px;
+      margin-bottom: 5px;
+      transition: 0.2s;
+    }
+
+    .sidebar-fixed .nav-link:hover,
+    .sidebar-fixed .nav-link.active {
+      background: rgba(255,255,255,0.12);
+      color: #00e5ff !important;
+    }
+
+    /* MAIN CONTENT */
     .content-area {
-      margin-top: 56px; /* navbar height */
-      margin-left: 250px; /* sidebar width */
+      margin-left: 250px;
       height: calc(100vh - 56px);
-      overflow-y: auto; /* Only main content scrolls */
-      background-color: #f8f9fa;
+      overflow-y: auto;
+      background: #f5f6fa;
+      border-top-left-radius: 12px;
+      transition: padding-top 0.25s ease;
+      padding-top: 0;
     }
 
-    /* Mobile only: sidebar not fixed */
+    /* When dropdown is open → push content down */
+    .content-area.dropdown-open {
+      padding-top: 40px !important;
+    }
+
     @media(max-width: 991px) {
       .content-area {
         margin-left: 0;
       }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #696969;
+      border-radius: 5px;
+    }
+
+    /* Prevent dropdown overlay */
+    .navbar .dropdown-menu.show {
+      margin-top: 10px !important;
     }
   </style>
 </head>
 
 <body>
 
-<!-- TOP NAVBAR -->
-<nav class="navbar navbar-dark px-3 py-2 d-flex justify-content-between align-items-center flex-wrap"
-     style="background-color: black;">
-
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark px-3 py-2 shadow-sm d-flex justify-content-between">
   <div class="d-flex align-items-center">
     <button class="btn btn-outline-light d-lg-none me-2" type="button"
             data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas">
       <i class="bi bi-list"></i>
     </button>
-    <span class="navbar-brand fw-bold mb-0">Classic Electricals Admin Page</span>
+    <span class="navbar-brand fw-bold mb-0 text-info">Classic Electricals Admin</span>
   </div>
 
   {% if admin %}
   <div class="dropdown mt-2 mt-lg-0">
     <a class="dropdown-toggle text-decoration-none text-white fw-bold" href="#" id="profileDropdown"
        role="button" data-bs-toggle="dropdown">
-      <i class="bi bi-person-circle"></i> Welcome, {{ admin.username }}
+      <i class="bi bi-person-circle"></i> {{ admin.username }}
     </a>
-    <ul class="dropdown-menu dropdown-menu-end">
+    <ul class="dropdown-menu dropdown-menu-end shadow-sm">
       <li><a class="dropdown-item" href="{% url 'profile' id=admin.id %}">Profile</a></li>
       <li><hr class="dropdown-divider"></li>
       <li><a class="dropdown-item" href="{% url 'changepassword' id=admin.id %}">Change Password</a></li>
@@ -89,9 +124,9 @@
 </nav>
 
 
-<!-- SIDEBAR (DESKTOP) -->
-<div class="sidebar-fixed d-none d-lg-flex flex-column text-white">
-  <ul class="nav nav-pills flex-column mb-auto fw-bold">
+<!-- SIDEBAR -->
+<div class="sidebar-fixed d-none d-lg-flex flex-column text-white fw-semibold">
+  <ul class="nav nav-pills flex-column mb-auto">
 
     <li class="nav-item">
       <a href="{% url 'admin_dashboard' %}" class="nav-link text-white">
@@ -101,22 +136,22 @@
 
     <li>
       <a class="nav-link text-white" data-bs-toggle="collapse" data-bs-target="#productCategoryMenu">
-        <i class="bi bi-diagram-3"></i> Products Categories
+        <i class="bi bi-diagram-3"></i> Product Categories
       </a>
-      <div class="collapse ms-3 
+      <div class="collapse ms-3
           {% if '/addproductcategory' in request.path or '/manageproductcategory' in request.path %}show{% endif %}"
            id="productCategoryMenu">
         <ul class="nav flex-column">
           <li>
             <a class="nav-link text-white {% if '/addproductcategory' in request.path %}active{% endif %}"
                href="{% url 'addproductcategory' %}">
-              <i class="bi bi-plus-lg"></i> Add Product Category
+              <i class="bi bi-plus"></i> Add Category
             </a>
           </li>
           <li>
             <a class="nav-link text-white {% if '/manageproductcategory' in request.path %}active{% endif %}"
                href="{% url 'manageproductcategory' %}">
-              <i class="bi bi-kanban"></i> Manage Product Category
+              <i class="bi bi-kanban"></i> Manage Category
             </a>
           </li>
         </ul>
@@ -127,7 +162,6 @@
       <a class="nav-link text-white" data-bs-toggle="collapse" data-bs-target="#productMenu">
         <i class="bi bi-bag-check"></i> Products
       </a>
-
       <div class="collapse ms-3 
           {% if '/addproducts' in request.path or '/manageproducts' in request.path %}show{% endif %}"
            id="productMenu">
@@ -135,7 +169,7 @@
           <li>
             <a class="nav-link text-white {% if '/addproducts' in request.path %}active{% endif %}"
                href="{% url 'addproducts' %}">
-              <i class="bi bi-plus-lg"></i> Add Products
+              <i class="bi bi-plus"></i> Add Product
             </a>
           </li>
           <li>
@@ -158,31 +192,26 @@
 </div>
 
 
-<!-- MOBILE SIDEBAR (OFFCANVAS) -->
+<!-- MOBILE SIDEBAR -->
 <div class="offcanvas offcanvas-start text-white" tabindex="-1" id="sidebarOffcanvas"
-     style="width:250px;background-color: #5a5a5a;">
+     style="width:250px;background:rgba(20,20,20,0.92);backdrop-filter:blur(6px);">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title">Menu</h5>
     <button class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
   </div>
   <div class="offcanvas-body p-2">
     <ul class="nav nav-pills flex-column mb-auto fw-bold">
-      <li class="nav-item">
-        <a href="{% url 'admin_dashboard' %}" class="nav-link text-white">
-          <i class="bi bi-speedometer2"></i> Dashboard
-        </a>
+      <li class="nav-item"><a href="{% url 'admin_dashboard' %}" class="nav-link text-white">
+        <i class="bi bi-speedometer2"></i> Dashboard</a>
       </li>
-
       <li>
         <a class="nav-link text-white" data-bs-toggle="collapse" href="#productCategoryMenuMobile">
-          <i class="bi bi-diagram-3"></i> Products Categories
+          <i class="bi bi-diagram-3"></i> Product Categories
         </a>
         <div class="collapse ms-3" id="productCategoryMenuMobile">
           <ul class="nav flex-column">
-            <li><a class="nav-link text-white" href="{% url 'addproductcategory' %}">
-              <i class="bi bi-plus-lg"></i> Add Product Category</a></li>
-            <li><a class="nav-link text-white" href="{% url 'manageproductcategory' %}">
-              <i class="bi bi-kanban"></i> Manage Product Category</a></li>
+            <li><a class="nav-link text-white" href="{% url 'addproductcategory' %}"><i class="bi bi-plus-lg"></i> Add Category</a></li>
+            <li><a class="nav-link text-white" href="{% url 'manageproductcategory' %}"><i class="bi bi-kanban"></i> Manage Category</a></li>
           </ul>
         </div>
       </li>
@@ -193,31 +222,46 @@
         </a>
         <div class="collapse ms-3" id="productMenuMobile">
           <ul class="nav flex-column">
-            <li><a class="nav-link text-white" href="{% url 'addproducts' %}">
-              <i class="bi bi-plus-lg"></i> Add Products</a></li>
-            <li><a class="nav-link text-white" href="{% url 'manageproducts' %}">
-              <i class="bi bi-kanban"></i> Manage Products</a></li>
+            <li><a class="nav-link text-white" href="{% url 'addproducts' %}"><i class="bi bi-plus-lg"></i> Add Product</a></li>
+            <li><a class="nav-link text-white" href="{% url 'manageproducts' %}"><i class="bi bi-kanban"></i> Manage Products</a></li>
           </ul>
         </div>
       </li>
 
       <li class="nav-item">
-        <a href="{% url 'page' %}" class="nav-link text-white">
-          <i class="bi bi-pencil-square"></i> Page Settings
-        </a>
+        <a href="{% url 'page' %}" class="nav-link text-white"><i class="bi bi-pencil-square"></i> Page Settings</a>
       </li>
     </ul>
   </div>
 </div>
 
+
 <!-- MAIN CONTENT -->
-<main class="content-area px-0">
+<main class="content-area px-0" id="contentArea">
   <div class="p-4">
     {% block body_block %}
     {% endblock %}
   </div>
 </main>
 
+
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- FIX: Push content when dropdown opens -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const dropdown = document.getElementById("profileDropdown");
+    const contentArea = document.querySelector(".content-area");
+
+    dropdown.addEventListener("show.bs.dropdown", () => {
+        contentArea.classList.add("dropdown-open");
+    });
+
+    dropdown.addEventListener("hide.bs.dropdown", () => {
+        contentArea.classList.remove("dropdown-open");
+    });
+});
+</script>
+
 </body>
 </html>

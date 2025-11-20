@@ -5,94 +5,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classic Electricals | Request Page</title>
-      <link rel="icon" href="{% static 'images\companylogo.ico' %}" type="image/x-icon">
-  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <link rel="icon" href="{% static 'images/companylogo.ico' %}" type="image/x-icon">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <style>
+        /* Tech-card shadow */
+        .tech-card {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #dcdcdc;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: .3s;
+        }
+        .tech-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 28px rgba(0,0,0,0.12);
+        }
+
+        /* Inputs tech style */
+        .form-control {
+            border-radius: 6px !important;
+            border: 1px solid #ccc !important;
+        }
+        .form-control:focus {
+            border-color: #0d6efd !important;
+            box-shadow: 0 0 8px rgba(13,110,253,0.35) !important;
+        }
+
+        /* Tech rounded button */
+        .btn-primary {
+            border-radius: 30px;
+            font-weight: bold;
+            padding-left: 35px;
+            padding-right: 35px;
+        }
+
+        /* Section title underline */
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: "";
+            width: 90px;
+            height: 4px;
+            background: #0d6efd;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -8px;
+            border-radius: 3px;
+        }
+
+        /* Remove navbar gap */
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+    </style>
+
 </head>
 
 
 <body id="contact">
-    <header>
-        {% include 'includes/header.html' %}
 
-    <section>
-    <!-- Include header -->
-  <!-- <div id="header-placeholder"></div> -->
-  </section>
+<header>
+    {% include 'includes/header.html' %}
 </header>
 
 
-    <section class="container-fluid text-black p-3 text-center mt-2">
-        <h1 class="fw-bold">Request a Quote</h1>
-    </section>
-<section class="container py-5" id="quote">
-  <div class="row justify-content-center customshadow bg-light p-5  rounded">
-    <div class="col-12 col-md-10 col-lg-8 text-center">
-      <p class="mb-4 fs-3 text-black fw-bold">
-        Interested in our products or services? Fill out the form below and we'll get back to you with a detailed quote.
-      </p>
-       {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-success">{{ message }}</div>
-        {% endfor %}
-      {% endif %}
-
-      <form method="POST" action="{% url 'request_email' %}">
-        {% csrf_token %}
-        <div class="row g-3">
-          <div class="col-md-6">
-            <input type="text" class="form-control" name="name" placeholder="Your Name" required>
-          </div>
-          <div class="col-md-6">
-            <input type="email" class="form-control" name="email" placeholder="Your Email" required>
-          </div>
-          <div class="col-md-6">
-            <input type="tel" class="form-control" name="mobile" placeholder="Mobile Number" maxlength="10" pattern="[0-9]{10}" required>
-          </div>
-          <div class="col-md-6">
-            <input type="text" class="form-control" name="subject" placeholder="Subject / Product Name">
-          </div>
-          <div class="col-12">
-            <textarea class="form-control" name="message" rows="4" placeholder="Describe your requirements..." required></textarea>
-          </div>
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary px-5 rounded-pill">Submit Request</button>
-          </div>
-        </div>
-      </form>
-
-    </div>
-  </div>
+<section class="container-fluid text-black p-3 text-center mt-2">
+    <h1 class="fw-bold section-title">Request a Quote</h1>
 </section>
 
 
+<section class="container py-3" id="quote">
+
+    <div class="row justify-content-center tech-card p-5">
+        <div class="col-12 col-md-10 col-lg-8 text-center">
+
+            <p class="mb-4 fs-3 text-black fw-bold">
+                Interested in our products or services?  
+                Fill out the form below and we'll get back to you with a detailed quote.
+            </p>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST" action="{% url 'request_email' %}">
+                {% csrf_token %}
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="tel" class="form-control" name="mobile" placeholder="Mobile Number"
+                               pattern="[0-9]{10}" maxlength="10" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" name="subject" placeholder="Subject / Product Name">
+                    </div>
+
+                    <div class="col-12">
+                        <textarea class="form-control" name="message"
+                                  rows="4" placeholder="Describe your requirements..." required></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Submit Request</button>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</section>
 
 
+{% include 'includes/footer.html' %}
 
-  
-  <section>
-    <!-- Include header -->
-  <!-- <div id="footer-placeholder"></div> -->
-  </section>
-      {% include 'includes/footer.html' %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Load header from external file
-    fetch('includes/header.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('header-placeholder').innerHTML = data);
-      // Load header from external file
-    fetch('includes/footer.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('footer-placeholder').innerHTML = data);
-  </script>
-
-      {% include 'includes/icons.html' %}
-
+{% include 'includes/icons.html' %}
 
 </body>
 </html>

@@ -6,11 +6,63 @@
 
 {% block body_block %}
 
+<style>
+    /* Modern Tech Profile UI */
+    .profile-card {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 35px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        border: 1px solid #e0e0e0;
+    }
+
+    .profile-title {
+        font-weight: 700;
+        font-size: 1.8rem;
+        color: #1a237e;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #37474f;
+    }
+
+    .input-group-text {
+        background: #f5f6fa;
+        border-radius: 10px 0 0 10px;
+    }
+
+    .form-control {
+        border-radius: 0 10px 10px 0;
+        border-left: 0;
+    }
+
+    .form-control:focus {
+        border-color: #1a237e !important;
+        box-shadow: 0 0 0 0.15rem rgba(26,35,126,0.25);
+    }
+
+    .btn-tech {
+        background: #1a237e;
+        color: white;
+        font-weight: 600;
+        padding: 10px 35px;
+        border-radius: 10px;
+        transition: 0.3s;
+    }
+
+    .btn-tech:hover {
+        background: #0d185f;
+        color: white;
+    }
+</style>
+
 <section class="container-fluid mt-4 p-2 p-sm-3">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6 shadow-lg p-4 p-sm-5 rounded">
-                <h3 class="mb-4 text-center fw-bold">Profile</h3>
+            <div class="col-12 col-md-8 col-lg-6 profile-card">
+
+                <h3 class="profile-title text-center mb-4">Admin Profile</h3>
 
                 {% if messages %}
                     {% for message in messages %}
@@ -18,17 +70,15 @@
                             {{ message }}
                         </div>
                     {% endfor %}
+
                     <script>
-                        // Automatically hide alerts after 10 seconds
-                        setTimeout(function () {
-                            const alerts = document.querySelectorAll('.alert');
-                            alerts.forEach(function (alert) {
+                        setTimeout(() => {
+                            document.querySelectorAll('.alert').forEach(alert => {
                                 alert.classList.remove('show');
-                                alert.classList.add('fade');
                                 alert.style.opacity = '0';
-                                setTimeout(() => alert.remove(), 500); 
+                                setTimeout(() => alert.remove(), 500);
                             });
-                        }, 10000); 
+                        }, 5000);
                     </script>
                 {% endif %}
 
@@ -36,32 +86,40 @@
                     <form method="POST">
                         {% csrf_token %}
 
+                        <!-- Username -->
                         <div class="mb-3">
-                            <label for="username" class="form-label fw-bold">Username:</label>
+                            <label for="username" class="form-label">Username</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0">
+                                <span class="input-group-text">
                                     <i class="bi bi-person-circle"></i>
                                 </span>
-                                <input type="text" name="username" id="username" class="form-control border-start-0" value="{{ admin.username }}" readonly>
+                                <input type="text" name="username" id="username"
+                                       class="form-control" value="{{ admin.username }}" readonly>
                             </div>
                         </div>
-                        
+
+                        <!-- Email -->
                         <div class="mb-3">
-                            <label for="email" class="form-label fw-bold">Email:</label>
+                            <label for="email" class="form-label">Email</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0">
+                                <span class="input-group-text">
                                     <i class="bi bi-envelope-fill"></i>
                                 </span>
-                                <input type="email" name="email" id="email" class="form-control border-start-0" value="{{ admin.email }}">
+                                <input type="email" name="email" id="email"
+                                       class="form-control" value="{{ admin.email }}">
                             </div>
                         </div>
 
-
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-success px-4">Update Profile</button>
+                        <!-- Submit -->
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-tech">
+                                <i class="bi bi-save"></i> Update Profile
+                            </button>
                         </div>
+
                     </form>
                 {% endif %}
+
             </div>
         </div>
     </div>
