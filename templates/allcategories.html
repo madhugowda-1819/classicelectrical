@@ -35,12 +35,16 @@
 <section class="container-fluid px-5 bg-back">
   <div class="container p-5 bg-cream">
     <h2 class="fw-bold text-primary mb-4 text-center">Our All Categories</h2>
-      <p class="text-center fs-5 fw-bold text-black">Find products designed for industrial safety and precision inspection</p>
+    <p class="text-center fs-5 fw-bold text-black">Find products designed for industrial safety and precision inspection</p>
+
     <div class="row g-4">
       {% for pcategory in category %}
       <div class="col-12 col-md-4">
-        <a href="{% url 'category' pcategory.pctid pcategory.pctname %}" class="text-decoration-none text-dark">
-          <div class="card border-2 shadow-sm d-flex flex-row align-items-center p-3 gap-3 h-100">
+        <a href="{% url 'category' pcategory.pctid pcategory.pctname|slugify %}" class="text-decoration-none text-dark">
+          
+          <div class="card border-2 shadow-sm d-flex flex-row flex-wrap align-items-center p-3 gap-3 h-100">
+            
+            <!-- Image -->
             <div class="flex-shrink-0" style="width: 100px;">
               {% if pcategory.pimage %}
                 <img src="{{ pcategory.pimage.url }}" class="img-fluid rounded" alt="{{pcategory.pctname}}">
@@ -48,17 +52,23 @@
                 <img src="{% static 'images/placeholder.jpg' %}" class="img-fluid rounded" alt="No image available">
               {% endif %}
             </div>
-            <div>
-              <h6 class="fw-bold mb-1">{{pcategory.pctname}}</h6>
+
+            <!-- Text -->
+            <div class="flex-grow-1" style="min-width: 0;">
+              <h6 class="fw-bold mb-1 text-break">{{pcategory.pctname}}</h6>
               <small class="text-muted">{{pcategory.total_products}} Products Available</small>
             </div>
+
           </div>
+
         </a>
       </div>
       {% endfor %}
     </div>
+
   </div>
 </section>
+
 
 
 
