@@ -1,101 +1,100 @@
 {% load static %}
-<!-- <style>
-  h5{
-    font-size: medium;
-    color: grey;
-  }
-  a,p{
-    color: white;
-    font-weight: bold;
-  }
-</style> -->
 <footer class="text-white pt-4" style="background-color: #011627;">
   <div class="container mt-3">
+
     <!-- Top Row -->
-    <div class="row  text-start text-md-start text-center" style="font-size: small;">
-      
+    <div class="row gy-4 text-start text-md-start text-center" style="font-size: small;">
+
+      <!-- PRODUCT TYPES -->
       <div class="col-lg-3 col-md-6">
-        <h5 class="fw-bold" style="font-size: medium; color: grey;">PRODUCT TYPES</h5>
+        <h5 class="fw-bold text-secondary" style="font-size: medium;">PRODUCT TYPES</h5>
         <ul class="list-unstyled">
-            {% for cat in footer_categories %}
-                <li>
-                    <a class="text-white text-decoration-none link-hover"
-                       href="{% url 'category' cat.pctid cat.pctname|slugify %}" style="color: white; font-weight: bold;">
-                       {{ cat.pctname }}
-                    </a>
-                </li>
-            {% endfor %}
-              
+          {% for cat in footer_categories %}
+            <li>
+              <a class="text-white text-decoration-none link-hover fw-bold"
+                 href="{% url 'category' cat.pctid cat.pctname|slugify %}">
+                 {{ cat.pctname }}
+              </a>
+            </li>
+          {% endfor %}
         </ul>
       </div>
 
+      <!-- FEATURES -->
       <div class="col-lg-2 col-md-6">
-        <h5 class="fw-bold" style="font-size: medium; color: grey;">FEATURES</h5>
+        <h5 class="fw-bold text-secondary" style="font-size: medium;">FEATURES</h5>
         <ul class="list-unstyled">
-          <li><a class="text-white text-decoration-none link-hover" style="color: white; font-weight: bold;" href="#">Enterprise</a></li>
-          <li><a class="text-white text-decoration-none link-hover" style="color: white; font-weight: bold;" href="{% url 'contact' %}">Customer Services</a></li>
-          <li><a class="text-white text-decoration-none link-hover" style="color: white; font-weight: bold;" href="{% url 'product' %}">Product Analytics</a></li>
-          <li><a class="text-white text-decoration-none link-hover" style="color: white; font-weight: bold;" href="#">Professional Services</a></li>
+          <li><a class="text-white text-decoration-none link-hover fw-bold" href="#">Enterprise</a></li>
+          <li><a class="text-white text-decoration-none link-hover fw-bold" href="{% url 'contact' %}">Customer Services</a></li>
+          <li><a class="text-white text-decoration-none link-hover fw-bold" href="{% url 'product' %}">Product Analytics</a></li>
+          <li><a class="text-white text-decoration-none link-hover fw-bold" href="#">Professional Services</a></li>
         </ul>
       </div>
 
-      <div class="col-lg-1 col-md-6">
-        <h5 class="fw-bold" style="font-size: medium; color: grey;">ABOUT</h5>
+      <!-- ABOUT -->
+      <div class="col-lg-2 col-md-6">
+        <h5 class="fw-bold text-secondary" style="font-size: medium;">ABOUT</h5>
         <ul class="list-unstyled">
-          <li><a class="text-white text-decoration-none link-hover" style="color: white; font-weight: bold;" href="{% url 'about' %}">About Us</a></li>
-          <li><a class="text-white text-decoration-none link-hover" style="color: white; font-weight: bold;" href="{% url 'contact' %}">Contact Us</a></li>
+          <li><a class="text-white text-decoration-none link-hover fw-bold" href="{% url 'about' %}">About Us</a></li>
+          <li><a class="text-white text-decoration-none link-hover fw-bold" href="{% url 'contact' %}">Contact Us</a></li>
         </ul>
       </div>
 
-      <div class="col-lg-2 col-md-6 ">
-          <h5 class="fw-bold" style="font-size: medium; color: grey;">MARKETING</h5>
-          <ul class="list-unstyled">
-            <li><a class="text-white text-decoration-none link-hover" style="color: white; font-weight: bold;" href="https://www.indiamart.com/classic-electricals-karnataka/">IndiaMart</a></li>
-          </ul>
+      <!-- MARKETING -->
+      <div class="col-lg-2 col-md-6">
+        <h5 class="fw-bold text-secondary" style="font-size: medium;">MARKETING</h5>
+        <ul class="list-unstyled">
+          <li><a class="text-white text-decoration-none link-hover fw-bold" href="https://www.indiamart.com/classic-electricals-karnataka/">IndiaMart</a></li>
+        </ul>
       </div>
 
-      <div class="col-lg-3 col-md-6 border-start-lg border-light ms-3">
-        <h5 class="fs-6 ms-2 fw-bold" style="font-size: medium; color: grey;">Registered Office Address:</h5>
-        <p class="ms-2" style="font-size: small; color: white; font-weight: bold">Classic Electricals, <br>
+      <!-- OFFICE ADDRESS with vertical line only on large screens -->
+      <div class="col-lg-3 col-md-12 border-start-lg border-light ps-lg-3">
+        <h5 class="fw-bold text-secondary" style="font-size: medium;">Registered Office Address:</h5>
+        <p class="fw-bold" style="font-size: small;">
+          Classic Electricals, <br>
           1st Floor, 12, Paramila Building, <br>
           3rd A Cross Vijayalaxmi Layout,<br> 
           Near Maramma Temple, Bagalagunte, <br>
           Bengaluru, 560073 <br>
-          Karnataka, India</p>
-          <p class="ms-2" style="font-size: small; color: white; font-weight: bold">Mobile: <span class="text-primary">+91-9449837441</span> / <span class="text-primary">+91-7019584060</span></p>
-      </div>
-
-      <div class="col-lg-3 col-md-6">
-          <p style="color: white;" class="fw-bold">
-            We offer high-quality, reliable testing and inspection instruments tailored for industrial needs.
-          </p>
+          Karnataka, India
+        </p>
+        <p class="fw-bold" style="font-size: small;">
+          Mobile: <span class="text-primary">+91-9449837441</span> / 
+          <span class="text-primary">+91-7019584060</span>
+        </p>
       </div>
 
     </div>
 
-    <hr class="border-light my-1 mb-1 mt-1" />
+    <hr class="border-light my-2" />
 
     <!-- Bottom Row -->
-    <div class="row text-center align-items-center ">
+    <div class="row text-center align-items-center gy-2">
+
       <div class="col-md-4">
-        <p class="mb-3">&copy; 2025 Classic Electricals | All rights reserved.</p>
+        <p class="mb-2">&copy; 2025 Classic Electricals | All rights reserved.</p>
       </div>
-      <div class="col-md-4 text-center">
-        <a class="text-white fs-4 " href="https://youtube.com/@classicelectricals1506?si=eqgd_VEVjnGjMEP5">
+
+      <div class="col-md-4">
+        <a class="text-white fs-4" href="https://youtube.com/@classicelectricals1506?si=eqgd_VEVjnGjMEP5">
           <i class="bi bi-youtube"></i>
         </a>
       </div>
-      <div class="col-md-4 me-0">
-        <p class="mb-3 text-center">Powered by <img class="img-fluid" src="{% static 'images/classicicon.png' %}" alt="CE" style="width: 110px; height: 100px;"></p>
+
+      <div class="col-md-4">
+        <p class="mb-2">Powered by 
+          <img class="img-fluid" src="{% static 'images/classicicon.png' %}" alt="CE" style="width: 110px; height: 100px;">
+        </p>
       </div>
+
     </div>
+
   </div>
-    
-
-
 </footer>
+
 <style>
   .link-hover:hover {
-    color: #e95c0b !important; /* Bootstrap's "info" color */
+    color: #e95c0b !important;
   }
 </style>
