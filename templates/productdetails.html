@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Classic Electricals | {{ productdet.pname }} Products</title>
+  <title>CE | {{ productdet.pname }} Product</title>
 
   <link rel="shortcut icon" href="{% static 'images/companylogo.png' %}" type="image/x-icon">
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
@@ -48,8 +48,8 @@
 
     <!-- Title -->
     <div class="text-center mb-5 pt-5">
-      <h2 class="fw-bold text-primary">{{ productdet.pname }} Product Details</h2>
-      <p class="text-muted">Product full specifications and images</p>
+      <!-- <h2 class="fw-bold text-primary">{{ productdet.pname }} Product Details</h2> -->
+      <!-- <h2 class="text">Product full specifications and images</h2> -->
     </div>
 
     <div class="row gx-5">
@@ -89,7 +89,7 @@
 
         <hr>
 
-        <h5 class="fw-bold mb-1">Product Details</h5>
+        <h5 class="fw-bold mb-1">Product Details:</h5>
 
         <p class="text-secondary ms-2" style="white-space: pre-line; line-height: 1.7;">
           {{ productdet.pdesc|safe }}
