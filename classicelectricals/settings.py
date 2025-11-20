@@ -117,12 +117,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 EMAIL_HOST='smtp.gmail.com'
-EMAIL_HOST_USER='classicelectricalqc@gmail.com'
-EMAIL_HOST_PASSWORD='mtwx fgiy cogu zxaf'
+EMAIL_HOST_USER='your email'
+EMAIL_HOST_PASSWORD='your password'
 EMAIL_USE_TLS=True
 EMAIL_USE_SSL=False
 EMAIL_PORT=587
-EMAIL_COMPANY='classicelectricalqc@gmail.com'
+EMAIL_COMPANY='your password'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
